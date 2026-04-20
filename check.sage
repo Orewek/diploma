@@ -34,14 +34,15 @@ def load_init():
 
 load_init()
 
-x = BooleanPolynomialRing(3, 'x').gens()
-# f = BooleanFunction('963c5af066ccaaff')
-f = BooleanFunction(x[0]*x[1] + x[0]*x[2] + x[1]*x[2] + 1)
-# print('f ANF:', f.algebraic_normal_form())
+if __name__ == "__main__":
+    a = BooleanFunction('6395')
+    b = BooleanFunction('1616')
+    # print(a.algebraic_normal_form(), a.is_balanced())
 
-res = sac(f)
-print(res)
-main_log.info('WORKING!')
+# x = BooleanPolynomialRing(3, 'x').gens()
+# f = BooleanFunction('963c5af066ccaaff')
+# f = BooleanFunction(x[0]*x[1] + x[0]*x[2] + x[1]*x[2] + 1)
+# print('f ANF:', f.algebraic_normal_form())
 
 # for i in range(256):
 #     hex_str = f"{i:02x}"

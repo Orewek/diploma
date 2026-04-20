@@ -1,0 +1,122 @@
+[project]
+name = "my_package"
+
+version = "0.1.0"
+authors = [
+    { name = "Danila Charykov", email = "danilacharykov@gmail.com" }]
+
+description = "Crypto diploma"
+readme = "README.md"
+
+requires-python = ">=3.10"
+
+[tool.flake8]
+encoding = "utf-8"
+max-line-length = 96
+max-complexity = 15
+min-python-version = "3.10"
+
+ignore = [
+    "B001", "D205", "E722", "VNE002", "LN001", "LN002", "CFQ002", "I801",
+    "E902", "AAA01", "D406", "SCS108", "NIC002", "D409", "I900", "E123",
+    "W503", "FNE007", "PLR913", "PLR917", "FNE005", "FNE008", "TR001", "CCR001",
+    "PLC413", "PLE402", "PLE401", "LIT003", "PLE611", "PLE602", "F821", "PLW621"]
+
+# [B001]   misses some bare excepts
+# [D205]   blank line between summary and description
+# [E722]   Not use bare except, specify exception instead
+# [VNE002] Variable name should be clarified
+# [LN001]  Line code is too long
+# [LN002]  doc/comment line is too long
+# [CFQ002] Amount of function arguments
+# [I801]   Use 'import ...' instead of 'from ... import ...'
+# [E902]   TokenError: unterminated string literal (detected at line x)
+# [AAA01]  no Act block found in test
+# [D406]   Section name should end with a newline
+# [SCS108] `assert` statements should not be present in production code
+# [NIC002] Implicitly concatenated str literals over multiple lines,
+# [D409]   Section underline should match the length of its name
+# [I900]   not listed as a requirement
+# [E123]   closing bracket does not match indentation of opening bracket's line
+# [W503]   line break before binary operator
+# [FNE007] "and" is not recommended in functions names
+# [PLR913] Too many arguments (5+x/5) (too-many-arguments)
+# [PLR917] Too many positional arguments (5+x/5) (too-many-positional-arguments)
+# [FNE005] Return type of the function is bool-like, but the name doesn't show it
+# [FNE008] Name of functions ends with it's first argument name
+# [TR001]  Missing `@pytestrail.case()` decorator
+# [CCR001] Cognitive complexity is too high (x+i > x)
+# [PLC413] Import "..." should be placed at the top of the module (wrong-import-position)
+# [PLE402] Attempted relative import beyond top-level package (relative-beyond-top-level)
+# [PLE401] Unable to import 'src.src.logger_config' (import-error)
+# [LIT003] Use single quotes for multiline string
+# [PLE611] No name 'x' in module 'y'
+# [PLE602] undefined variable 'x' (undefined-variable)
+# [F821]   undefined name 'x'
+# [PLW621] Redefining name 'x' from outer scope (line y) (redefined-outer-name)
+
+exclude = [
+    "**/PKG-INFO",
+    "**/*.egg-info/**",
+    ".git",
+    "__pycache__",
+    "**/__init__.py",
+    "__init__",
+    "__init__.py",
+    ".env",
+    "*.pyc",
+    ".venv",
+    "venv",
+    "htmlcov",
+    "logs",
+    "*.xlsx",
+    "*.cfg",
+    "*.ini",
+    "migrations",
+    ".pytest_cache",
+    "locale",
+    "*.txt",
+    "*.csv",
+    "*.md",
+    "*.sage.py",
+    ".mypy_cache",
+    "*.code-workspace"]
+
+filename = ["*.sage", "*.py"]
+
+show-source = false
+statistics = false
+count = false
+
+
+[tool.flake8.plugins]
+# flake8-docstrings
+docstring-convention = "numpy"
+
+# flake8-length
+max-function-length = 70
+max-doc-length = 89
+
+# flake8-encodings
+accept-encodings = ["utf-8"]
+
+# flake8-spellcheck
+dictionaries = ["en_US", "python", "technical", "pandas"]
+
+[tool.mypy]
+python_version = "3.13"
+disallow_untyped_defs = true
+disallow_any_unimported = true
+no_implicit_optional = true
+check_untyped_defs = true
+warn_return_any = true
+warn_unused_ignores = true
+
+disable_error_code = [
+    "union-attr",
+    "unused-ignore",
+    "no-any-unimported",
+    "import-untyped",
+    "name-defined",]
+
+exclude = "git.*|env."

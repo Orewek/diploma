@@ -1,0 +1,4 @@
+09:32.806 | DEBUG | Got 2 bool_funcs: (hex(17) n_vals(3))&(hex(9696) n_vals2(4)) | max_sum_corr_theorem
+09:32.826 | DEBUG | Got a bool function: hex(17) num_val(3) | sac
+09:32.893 | DEBUG | Subfunction is constant, returning k=(1) | sac
+09:32.893 | INFO | WORKING! | <module>

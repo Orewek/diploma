@@ -1,0 +1,4 @@
+02:26.639 | DEBUG | Start (sac) | wrapper
+02:26.639 | DEBUG | Got a bool function: hex(6395) num_val(4) | sac
+02:26.675 | DEBUG | sub_func.derivatite(u) != 0, returning k=(0) | sac
+02:26.675 | DEBUG | End (sac) | wrapper

@@ -37,6 +37,8 @@ load_init()
 if __name__ == "__main__":
     a = BooleanFunction('6395')
     b = BooleanFunction('1616')
+    res = sac(a)
+    print(res)
     # print(a.algebraic_normal_form(), a.is_balanced())
 
 # x = BooleanPolynomialRing(3, 'x').gens()

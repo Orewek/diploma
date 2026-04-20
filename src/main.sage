@@ -14,17 +14,18 @@ from sage.crypto.boolean_function import (
     random_boolean_function,
 )
 from sage.rings.integer import Integer
+from sage.rings.polynomial.pbori.pbori import BooleanMonomial, BooleanPolynomialRing
 
 if TYPE_CHECKING:
     from sage.matrix.matrix_integer_dense import Matrix_integer_dense
     from sage.modules.vector_mod2_dense import Vector_mod_2_dense
     from sage.rings.finite_rings.integer_mod import IntegerMod_Int
     from sage.rings.polynomial.pbori import BooleanPolynomial
-    from sage.rings.polynomial.pbori.pbori import BooleanMonomial, BooleanPolynomialRing
 
 from pathlib import Path
 
-from src.decorators import log_calls
+from decorators import log_calls
+
 from logger_config import main_log
 
 
@@ -102,72 +103,7 @@ def sac(bool_func: 'BooleanFunction') -> int:
 
 
 @log_calls(logger_name=main_log, level='DEBUG')
-def verify_inequality(bool_func: 'BooleanFunction') -> bool:
-    """Verify that cardinality of non-zero correlations * cardinality NW_f >= 2**n
-
-    Args:
-    -----
-        bool_func: Boolean Function (f)
-
-    Returns:
-    --------
-        True/False
-    """
-    # note: non ci_f equals to NW_f
-    # non ci_f = v_n - ci_f
-    main_log.debug(
-        'Got a bool function: hex({hex_value}) num_val({number_of_variables})',
-        hex_value=bool_func.truth_table(format='hex'),
-        number_of_variables=bool_func.nvariables(),
-    )
-    non_ci_f = (1 << bool_func.nvariables()) - len(get_CI_function(bool_func))
-    n_delta_f = sum(1 for corr in bool_func.absolute_autocorrelation() if corr != 0)
-    main_log.debug(
-        'Calculated non_ci_f: {non_ci_f}; n_delta_f: {n_delta_f}',
-        non_ci_f=non_ci_f,
-        n_delta_f=n_delta_f,
-    )
-
-    return n_delta_f * non_ci_f >= (1 << bool_func.nvariables())
-
-
-@log_calls(logger_name=main_log, level='DEBUG')
-def max_sum_corr_theorem(
-        bool_func_1: 'BooleanFunction',
-        bool_func_2: 'BooleanFunction',
-) -> bool | None:
-    """Check theorem that sum cross_corr ** 2 <= 2^3n.
-
-    Args:
-    -----
-        bool_func_1: Boolean Function (f)
-        bool_func_2: Boolean Function (g)
-
-    Returns:
-    --------
-        True/False, None if amount of variables in f and g not equal
-    """
-    main_log.debug(
-        'Got 2 bool_funcs: (hex({hexval1}) n_vals({nval1}))&(hex({hexval2}) n_vals2({nvals2}))',
-        hexval1=bool_func_1.truth_table(format='hex'),
-        nval1=bool_func_1.nvariables(),
-        hexval2=bool_func_2.truth_table(format='hex'),
-        nvals2=bool_func_2.nvariables(),
-    )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
-        return None
-
-    sum_sq_cross_corr: int = sum(x**2 for x in all_cross_correlations(bool_func_1, bool_func_2))
-    main_log.debug(
-        'Got the sum of x**2 of all cross_correlations: {sum_sq_cross_corr}',
-        sum_sq_cross_corr=sum_sq_cross_corr,
-    )
-
-    return sum_sq_cross_corr <= (1 << (3 * bool_func_1.nvariables()))
-
-
-@log_calls(logger_name=main_log, level='DEBUG')
-def get_CI_function(bool_func: 'BooleanFunction') -> list[int]:
+def get_ci_function(bool_func: 'BooleanFunction') -> list[int]:
     """Get CI_f of the function.
 
     Args:
@@ -183,7 +119,10 @@ def get_CI_function(bool_func: 'BooleanFunction') -> list[int]:
         hex_value=bool_func.truth_table(format='hex'),
         number_of_variables=bool_func.nvariables(),
     )
-    ci_f: list[int] = [_ for _, val in enumerate(bool_func.walsh_hadamard_transform()) if val == 0]
+    ci_f: list[int] = [
+        _ for _, val in enumerate(bool_func.walsh_hadamard_transform())
+        if val == 0
+    ]
     main_log.debug('Calculated the ci_f: {ci_f}', ci_f=ci_f)
 
     return ci_f
@@ -215,67 +154,13 @@ def get_intersecting_spectral(
     if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
         return None
 
-    ci_f = set(get_CI_function(bool_func_1))
-    ci_g = set(get_CI_function(bool_func_2))
+    ci_f = set(get_ci_function(bool_func_1))
+    ci_g = set(get_ci_function(bool_func_2))
 
     intersection = ci_f.intersection(ci_g)
     main_log.debug('Calculated intersection: {intersection}', intersection=intersection)
 
     return intersection if intersection else False
-
-
-@log_calls(logger_name=main_log, level='DEBUG')
-def theorem_convolution(
-        bool_func_1: 'BooleanFunction',
-        bool_func_2: 'BooleanFunction',
-) -> bool | None:
-    """Verify convolution theorem.
-    W_{h}(u) = (1/2^n) * sum_x(W_f(x) * W_g(x+u))
-    Where h(x) = f(x)+g(x)
-
-    Args:
-        bool_func_1: Boolean Function (f)
-        bool_func_2: Boolean Function (g)
-
-    Returns:
-        True if func's satisfy the theorem, false otherwise
-    """
-    main_log.debug(
-        'Got 2 bool_funcs: (hex({hexval1}) n_vals({nval1}))&(hex({hexval2}) n_vals2({nvals2}))',
-        hexval1=bool_func_1.truth_table(format='hex'),
-        nval1=bool_func_1.nvariables(),
-        hexval2=bool_func_2.truth_table(format='hex'),
-        nvals2=bool_func_2.nvariables(),
-    )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
-        return None
-
-    number_of_variables: int = bool_func_1.nvariables()
-    h: 'BooleanFunction' = BooleanFunction(
-        [
-            operator.xor(bool_func_1(i), bool_func_2(i))
-            for i in range(1 << number_of_variables)
-        ],
-    )
-
-    w_f: list[int] = list(bool_func_1.walsh_hadamard_transform())
-    w_g: list[int] = list(bool_func_2.walsh_hadamard_transform())
-    w_h: list[int] = list(h.walsh_hadamard_transform())
-    main_log.debug('Calculated w_h: {w_h}', w_h=w_h)
-
-    w_h_from_convolution: list[int] = []
-    for u_derivative in range(1 << number_of_variables):
-        total = sum(
-            w_f[x] * w_g[operator.xor(x, u_derivative)]
-            for x in range(1 << number_of_variables)
-        )
-        w_h_from_convolution.append(total // (1 << number_of_variables))
-
-    main_log.debug(
-        'Calculated w_h from convolution: {w_h_from_convolution}',
-        w_h_from_convolution=w_h_from_convolution,
-    )
-    return w_h == w_h_from_convolution
 
 
 @log_calls(logger_name=main_log, level='DEBUG')
@@ -289,7 +174,7 @@ def fwht(vector: list[int]) -> list[int]:
 
     Args:
     -----
-        Vector:
+        vector:
 
     Returns:
     --------
@@ -310,53 +195,6 @@ def fwht(vector: list[int]) -> list[int]:
         step <<= 1
 
     return vector
-
-
-@log_calls(logger_name=main_log, level='DEBUG')
-def theorem_about_cross_correlation(
-        bool_func_1: 'BooleanFunction',
-        bool_func_2: 'BooleanFunction',
-) -> bool | None:
-    """Check that x * y = z.
-    x = (vector of cross_correlations lenght of n)
-    y = (hadamard matrix of order n)
-    z = vector of length n: Walsh_hadamard coeff: (W_f(0) * W_g(0), ... , W_f(2^n - 1) * W_g(2^n - 1))
-
-    Args:
-    -----
-        bool_func_1: Boolean Function (f)
-        bool_func_2: Boolean Function (g)
-
-    Returns:
-    --------
-        None if not equal variables, True if x * y = z, otherwise False
-    """
-    main_log.debug(
-        'Got 2 bool_funcs: (hex({hexval1}) n_vals({nval1}))&(hex({hexval2}) n_vals2({nvals2}))',
-        hexval1=bool_func_1.truth_table(format='hex'),
-        nval1=bool_func_1.nvariables(),
-        hexval2=bool_func_2.truth_table(format='hex'),
-        nvals2=bool_func_2.nvariables(),
-    )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
-        return None
-
-    vector_of_cross_correlations: list[int] | None = all_cross_correlations(
-        bool_func_1,
-        bool_func_2,
-    )
-    if vector_of_cross_correlations is None:
-        return None
-
-    bool_func_1_walsh_coef: list[int] = bool_func_1.walsh_hadamard_transform()
-    bool_func_2_walsh_coef: list[int] = bool_func_2.walsh_hadamard_transform()
-
-    walsh_coef_product: list[int] = [
-        bool_func_1_walsh_coef[i] * bool_func_2_walsh_coef[i]
-        for i in range(len(bool_func_1_walsh_coef))
-    ]
-
-    return fwht(vector_of_cross_correlations) == walsh_coef_product
 
 
 @log_calls(logger_name=main_log, level='DEBUG')
@@ -382,7 +220,7 @@ def fast_sylvester_hadamard(matrix_order: int) -> 'Matrix_integer_dense':
 
     return block_matrix(
         [
-            [h_prev,  h_prev],
+            [h_prev,  h_prev],  # flake8:noqa
             [h_prev, -h_prev],
         ],
     )
@@ -570,27 +408,10 @@ def get_dot_product_functions(
     vector_2: 'Vector_mod_2_dense' = vector(GF(2), bool_func_2.truth_table())
     main_log.debug(
         'Returning: {vector_1_dot_vector_2}',
-        vector_1_dot_vector_2=vector_1*vector_2,
+        vector_1_dot_vector_2=vector_1 * vector_2,
     )
 
     return vector_1 * vector_2
-
-
-@log_calls(logger_name=main_log, level='DEBUG')
-def check_parsevals_identity(w_walsh: tuple[int, ...], number_of_variables: int) -> bool:
-    """Check are w_walsh coefficients correct by parseval's identity.
-
-    Args:
-    -----
-        w_walsh: walsh coefficients
-        number_of_variables:
-
-    Returns:
-        True if correct, otherwise False
-    """
-    main_log.debug('Got walsh coeff: {walsh_coef}', walsh_coef=w_walsh)
-
-    return sum(coef**2 for coef in w_walsh) == (1 << (2 * number_of_variables))
 
 
 @log_calls(logger_name=main_log, level='DEBUG')
@@ -650,7 +471,7 @@ def get_function_weight(bool_func: 'BooleanFunction') -> int:
 def get_distance_between_functions(
         bool_func_1: 'BooleanFunction',
         bool_func_2: 'BooleanFunction',
-) -> int:
+) -> int | None:
     """Calculate distance between 2 bool_func's.
 
     Args:
@@ -680,7 +501,7 @@ def get_distance_between_functions(
 @log_calls(logger_name=main_log, level='DEBUG')
 def check_regularity(
         bool_func: 'BooleanFunction',
-) -> tuple[bool, tuple[int, int]] | tuple[bool, None]:
+) -> tuple[bool, tuple[int | None, int | None]] | tuple[bool, None]:
     """Find is function a c-regular.
 
     Args:
@@ -736,7 +557,7 @@ def find_decompositions(
 
     Args:
     -----
-        func: function created by truthtable
+        bool_func: function created by truthtable
         number_of_variables: amount of variables into function
         all_decompositions: Find first decompositions or all of them
     """
@@ -753,7 +574,7 @@ def find_decompositions(
             '{len_tt} < 2^{number_of_variables} ({number_of_variables_2_n})',
             len_tt=len(truth_table),
             number_of_variables=number_of_variables,
-            number_of_variables_2_n=(1 << number_of_variables),
+            number_of_variables_2_n=1 << number_of_variables,
         )
         return
 
@@ -781,7 +602,7 @@ def find_decompose(
         number_of_variables: int,
         truth_table: tuple[bool, ...],
         all_decompositions: bool,
-) -> list[list[tuple[int, int]] | int]:
+) -> list[list[tuple[int, ...] | int]]:
     """Try to find decompose of the function.
 
     Args:
@@ -795,7 +616,7 @@ def find_decompose(
         tuple of h(s) or -1 of not decomposable
     """
     variables: list[int] = list(range(number_of_variables))
-    decompositions: list[list[tuple[int, int] | int]] = []
+    decompositions: list[list[tuple[int, ...] | int]] = []
     # 1 < s < n - 1
     for s in range(2, number_of_variables - 1):
         # subset_indices is indexes that goes into s
@@ -1005,9 +826,7 @@ def random_shit() -> None:
     )
 
 
-def load_init():
-    if getattr(load_init, "done", False):
-        return
+def load_init() -> None:
     current_path: Path = Path(__file__).resolve().parent
     init_path = current_path.parent / 'init_files.sage'
 
@@ -1016,7 +835,6 @@ def load_init():
 
     if init_path:
         load(str(init_path))
-        load_init.done = True
 
     else:
         print('Warning: init_files.sage not found')

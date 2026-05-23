@@ -3,9 +3,11 @@
 
 import operator
 
-from decorators import log_calls
+from src.decorators import log_calls
 
-from logger_config import main_log
+from src.logger_config import main_log
+
+from src.some_checks import check_func_equal_amount_vars
 
 from sage.crypto.boolean_function import BooleanFunction
 

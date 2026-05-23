@@ -48,10 +48,10 @@ def log_calls(
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
             log_method = getattr(logger_name, level.lower(), logger_name.info)
             func_name: str = func.__name__
-            log_method('Start ({%s})', func_name)
+            log_method('Start ({})', func_name)
             try:
                 result: R = func(*args, **kwargs)
-                log_method('End ({%s})', func_name)
+                log_method('End ({})', func_name)
                 return result
             except Exception as e:
                 logger_name.error('Error in {1}: {2}', func_name, e)

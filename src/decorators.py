@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable="wrong-import-order"
-# flake8: noqa
+# mypy: disable-error-code="import-not-found"
 """Count how long func was working."""
 
 import functools

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# pylint: disable="wrong-import-order"
 # mypy: disable-error-code="import-not-found"
 """Verification for many things in code."""
 

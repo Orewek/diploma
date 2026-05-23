@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=wrong-import-order
+# mypy: disable-error-code="import-not-found"
 """check module."""
 
 from pathlib import Path
@@ -37,10 +37,10 @@ load_init()
 if __name__ == "__main__":
     a = BooleanFunction('6395')
     b = BooleanFunction('1616')
-    res = sac(a)
-    print(res)
-    # print(a.algebraic_normal_form(), a.is_balanced())
 
+    f = BooleanFunction('963c5af066ccaaff')
+    res = is_hyper_bent(f)
+    print(res)
 # x = BooleanPolynomialRing(3, 'x').gens()
 # f = BooleanFunction('963c5af066ccaaff')
 # f = BooleanFunction(x[0]*x[1] + x[0]*x[2] + x[1]*x[2] + 1)

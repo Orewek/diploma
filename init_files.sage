@@ -7,7 +7,7 @@ if 'INIT_FILES_LOADED' not in globals():
     current_path = Path(__file__).resolve().parent
     last_folder = current_path.name
 
-    if last_folder in ['src', 'archive']:
+    if last_folder in ['src', 'archive', 'tests']:
         project_root = current_path.parent
     else:
         project_root = current_path
@@ -16,3 +16,4 @@ if 'INIT_FILES_LOADED' not in globals():
 
     load(str(project_root / "src/some_checks.sage"))
     load(str(project_root / "src/main.sage"))
+    load(str(project_root / "src/decorators.py"))

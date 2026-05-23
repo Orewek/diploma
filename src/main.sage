@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=wrong-import-order
+# mypy: disable-error-code="import-not-found"
 """Main module."""
 import itertools
 import math
@@ -27,6 +27,244 @@ from pathlib import Path
 from decorators import log_calls
 
 from logger_config import main_log
+
+
+def is_without_forbidden(bool_func: 'BooleanFunction') -> bool:
+    """Check if function is forbidden.
+
+    Args:
+    -----
+        bool_func: Boolean Function
+
+    Returns:
+    --------
+        True/False
+    """
+    number_of_variables = bool_func.nvariables()
+    u_last = vector(GF(2), [0] * (number_of_variables - 1) + [1])
+    u_first = vector(GF(2), [1] + [0] * (number_of_variables - 1))
+
+    return any(
+        [
+            get_function_weight(bool_func.derivative(u_first)) == (1 << number_of_variables),
+            get_function_weight(bool_func.derivative(u_last)) == (1 << number_of_variables),
+        ],
+    )
+
+
+def find_best_rho_and_theta(bool_func: 'BooleanFunction') -> None | dict:
+    """Find rho and theha that .
+
+    Args:
+    -----
+        bool_func: Boolean Function
+
+    Returns:
+    --------
+        None or rho and theha that covers sequence
+    """
+    num_vars = int(bool_func.nvariables())
+    num_states = 1 << num_vars
+    # all f(u)
+    derivatives_tt = []
+    for i in range(num_states):
+        bits = Integer(i).bits()
+        u_list = bits[:num_vars] + [0] * (num_vars - len(bits))
+        derivatives_tt.append(list(bool_func.derivative(u_list).truth_table()))
+    # Make matrix M, where x dots is the rows, derivatives u is the columns
+    rows = [
+        [int(derivatives_tt[u_idx][x_idx]) for u_idx in range(num_states)]
+        for x_idx in range(num_states)
+    ]
+    m = matrix(QQ, rows)
+    b = vector(QQ, [1] * num_states)
+    if m.rank() != m.augment(b).rank():
+        return None
+
+    # Find a solution for rho = 1
+    theta_sol = m.solve_right(b)
+    # Make theta and rho integers
+    common_den = lcm([x.denominator() for x in theta_sol])
+
+    return {
+        'rho': int(common_den),
+        'theta': {i: int(val) for i, val in enumerate(theta_sol * common_den) if val != 0},
+    }
+
+
+def is_hyper_bent(bool_func: 'BooleanFunction') -> bool:
+    """Check if function is hyperbent. function must have even amount of variables.
+
+    Args:
+    -----
+        bool_func: Boolean Function
+
+    Returns:
+    --------
+        True/False
+    """
+    number_of_variables = bool_func.nvariables()
+    if number_of_variables % 2 != 0:
+        return False
+
+    if not bool_func.is_bent():
+        return False
+
+    # Field and its elements
+    k = GF(1 << number_of_variables, 'z')
+    # List all x from the field (corresponding to vectors from V_n)
+    elements = list(k)
+    # Set of exponents s coprime to 2^n - 1
+    # (In the simplest case, it is enough to check the s for which this is a permutation)
+    target_walsh = 1 << (number_of_variables // 2)
+    # Find П_n: s that gcd(s, 2^n - 1) == 1
+    modulus = (1 << number_of_variables) - 1
+    Pi_n = [s for s in range(1, modulus) if gcd(s, modulus) == 1]
+
+    tt = bool_func.truth_table()
+    # Check for each s from П_п and each a from F_(2^n)
+    for s in Pi_n:
+        for a in k:
+            # Calculate sum of W_f(a, s)
+            current_sum = sum(
+                # f(x) + Trace(a * x^s)
+                (-1)**operator.xor(int(tt[i]), int((a * (x**s)).trace()))
+                for i, x in enumerate(elements)
+            )
+
+            if abs(current_sum) != target_walsh:
+                return False
+
+    return True
+
+
+@log_calls(logger_name=main_log, level='DEBUG')
+def satisfies_pc_l(bool_func: 'BooleanFunction', l: int | None = None) -> bool | int:
+    """Check if function satisfy PC(l).
+
+    Args:
+    -----
+        bool_func: Boolean Function
+        l: criteria l
+
+    Returns:
+    --------
+        True/False for specified l or max l for the function
+    """
+    number_of_variables: int = bool_func.nvariables()
+    if l is not None and (l < 1 or l > bool_func.nvariables()):
+        main_log.warning(
+            '1 <= l < number_of_variables not satisfied: l={l}; n:{num_vars}',
+            l=l,
+            num_vars=number_of_variables,
+        )
+        return False
+
+    main_log.debug(
+        'Got a bool function: hex({hex_value}); num_val({number_of_variables}); l({l})',
+        hex_value=bool_func.truth_table(format='hex'),
+        number_of_variables=number_of_variables,
+        l=l,
+    )
+    # check is function satisfy PC(l)
+    if l is not None:
+        # all vectors of len n
+        for derivative_u in VectorSpace(GF(2), number_of_variables):
+            # all u that 1 <= wt(u) <= l
+            if (
+                1 <= derivative_u.hamming_weight() <= l
+                and not bool_func.derivative(derivative_u).is_balanced()
+            ):
+                return False
+
+        main_log.debug(
+            'function satisfy PC({l}), returning True',
+            l=l,
+        )
+        return True
+
+    # find max l for function that PC(l) is satisfied
+    for l in range(1, number_of_variables + 1):
+        # all vectors of len n
+        for derivative_u in VectorSpace(GF(2), number_of_variables):
+            # all u that 1 <= wt(u) <= l
+            if (
+                derivative_u.hamming_weight() == l
+                and not bool_func.derivative(derivative_u).is_balanced()
+            ):
+                main_log.debug('returning l={res}', res=l - 1)
+                return l - 1
+
+    main_log.debug(
+        'function passes all iterations, returning l=({l})',
+        l=number_of_variables,
+    )
+    return number_of_variables
+
+
+def satisfies_pc_l_order_k(bool_func: 'BooleanFunction', l: int, k: int) -> bool:
+    """Check that function satisfy PC(l) with k criterial.
+
+    Args:
+    -----
+        bool_func: Boolean Function
+        l: criteria l
+        k: criteria k
+
+    Returns:
+    --------
+        True/False
+    """
+    number_of_variables: int = bool_func.nvariables()
+    main_log.debug(
+        'Got hex({hex_value}); num_val({number_of_variables}); l({l}); k({k});',
+        hex_value=bool_func.truth_table(format='hex'),
+        number_of_variables=number_of_variables,
+        l=l,
+        k=k,
+    )
+    if not (1 <= k < number_of_variables and 1 <= l <= number_of_variables - k):
+        main_log.debug('1 <= k < n or 1 <= l <= n - k not satisfied')
+        return False
+
+    poly: 'BooleanPolynomial' = bool_func.algebraic_normal_form()
+    variables_of_bool_func: tuple['BooleanPolynomial'] = poly.parent().gens()
+
+    # Going through all combinations of k variables that we are going to fix
+    for indices in itertools.combinations(range(number_of_variables), k):
+        # That k variables that we have chosen need to equate to 0 or 1
+        # There is 1 << k options to do that
+        for values in itertools.product([0, 1], repeat=k):
+            # Put variables that we have chosen into new polynomial
+            sub_poly: 'BooleanPolynomial' = poly.subs(
+                {variables_of_bool_func[idx]: val for idx, val in zip(indices, values)},
+            )
+            sub_anf: 'BooleanPolynomial' = BooleanFunction(sub_poly).algebraic_normal_form()
+            # sage still thinks that there are 'n' variables in polynomial even if some
+            # variable is 'missing' it is does not matter so to get a true amount of
+            # variables of subfunction (to correctly calculate truth table and derivatives)
+            # we have to create a new polynomial Ring with 'n - k' degree and put the
+            # variables that use the subfunction after that can create a new boolean
+            # function with and an old anf and even sage was thinking about the wrong amount
+            # of variables still and was correct
+            used_vars: tuple['BooleanPolynomial', ...] = sub_anf.variables()
+
+            # subfunction is constant
+            if len(used_vars) <= 1:
+                main_log.debug('Subfunction is constant, returning False')
+                return False
+
+            new_r: 'BooleanPolynomialRing' = BooleanPolynomialRing(
+                len(used_vars),
+                names=[str(v) for v in used_vars],
+            )
+            sub_bf: 'BooleanFunction' = BooleanFunction(new_r(str(sub_anf)))
+            # Check PC(l) for subfunction
+            if not satisfies_pc_l(sub_bf, l=l):
+                return False
+
+    main_log.debug('Function satisfies PC({l}) of order k={k}', l=l, k=k)
+    return True
 
 
 @log_calls(logger_name=main_log, level='DEBUG')
@@ -68,7 +306,7 @@ def sac(bool_func: 'BooleanFunction') -> int:
                 # function with and an old anf and even sage was thinking about the wrong amount
                 # of variables still and was correct
                 used_vars: tuple['BooleanMonomial', ...] = sub_anf.variables()
-                # Создаём новую функцию только от используемых переменных
+                # Create a new derivative function
                 if len(used_vars) > 0:
                     new_r: 'BooleanPolynomialRing' = BooleanPolynomialRing(
                         len(used_vars),
@@ -132,7 +370,7 @@ def get_ci_function(bool_func: 'BooleanFunction') -> list[int]:
 def get_intersecting_spectral(
         bool_func_1: 'BooleanFunction',
         bool_func_2: 'BooleanFunction',
-) -> set | bool | None:
+) -> set | None:
     """Calculate intersecting spectral.
 
     Args:
@@ -160,7 +398,7 @@ def get_intersecting_spectral(
     intersection = ci_f.intersection(ci_g)
     main_log.debug('Calculated intersection: {intersection}', intersection=intersection)
 
-    return intersection if intersection else False
+    return intersection if intersection else None
 
 
 @log_calls(logger_name=main_log, level='DEBUG')
@@ -210,7 +448,7 @@ def fast_sylvester_hadamard(matrix_order: int) -> 'Matrix_integer_dense':
     """
     # [!] possible to calculate the matrix if matrix order <= 13
     # using standard method and hoping for the best
-    if matrix_order >= 14:
+    if matrix_order >= 12:
         return hadamard_matrix(1 << matrix_order)
 
     if matrix_order == 0:
@@ -297,21 +535,14 @@ def cross_correlation_u(
         return None
 
     number_of_variables: int = bool_func_1.nvariables()
-    tt_f: list[int] = [int(v) for v in bool_func_1.truth_table()]
-    tt_g: list[int] = [int(v) for v in bool_func_2.truth_table()]
 
-    total: int = 0
-    for x_int in range(1 << number_of_variables):
-        # xor x + u
-        idx_shifted: int = operator.xor(x_int, u_derivative)
+    f_pm1 = [1 if v == 0 else -1 for v in bool_func_1.truth_table()]
+    g_pm1 = [1 if v == 0 else -1 for v in bool_func_2.truth_table()]
 
-        # xor f(x) + g(x + u)
-        val: int = (tt_f[x_int] + tt_g[idx_shifted]) % 2
-
-        if val == 1:
-            total -= 1
-        else:
-            total += 1
+    total: int = sum(
+            f_pm1[x_int] * g_pm1[operator.xor(x_int, u_derivative)]
+            for x_int in range(1 << number_of_variables)
+    )
 
     main_log.debug('Returning calculation value {total}', total=total)
     return total
@@ -343,10 +574,10 @@ def all_cross_correlations(
     if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
         return None
 
-    return [
-        cross_correlation_u(bool_func_1, bool_func_2, u)
-        for u in range(1 << bool_func_1.nvariables())
-    ]
+    w_f = bool_func_1.walsh_hadamard_transform()
+    w_g = bool_func_2.walsh_hadamard_transform()
+    w_product = [w_f[i] * w_g[i] for i in range(1 << bool_func_1.nvariables())]
+    return [corr // (1 << bool_func_1.nvariables()) for corr in fwht(w_product)]
 
 
 @log_calls(logger_name=main_log, level='DEBUG')
@@ -375,7 +606,7 @@ def check_perfectly_uncorrelated(
     if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
         return None
 
-    return not any(all_cross_correlations(bool_func_1, bool_func_2))
+    return not any(all_cross_correlations(bool_func_1, bool_func_2)[1:])
 
 
 @log_calls(logger_name=main_log, level='DEBUG')
@@ -495,7 +726,8 @@ def get_distance_between_functions(
 
     table_1: tuple[int, ...] = bool_func_1.truth_table()
     table_2: tuple[int, ...] = bool_func_2.truth_table()
-    return sum(1 for i in range(len(table_1)) if table_1[i] != table_2[i])
+
+    return sum(operator.xor(a, b) for a, b in zip(table_1, table_2))
 
 
 @log_calls(logger_name=main_log, level='DEBUG')
@@ -551,8 +783,8 @@ def check_regularity(
 def find_decompositions(
         bool_func: 'BooleanFunction',
         number_of_variables: int,
-        all_decompositions: bool,
-) -> None:
+        all_decompositions: bool = False,
+) -> None | tuple[list[tuple[int, int]], ...]:
     """Find all decompositions of the function (if exists).
 
     Args:
@@ -560,6 +792,10 @@ def find_decompositions(
         bool_func: function created by truthtable
         number_of_variables: amount of variables into function
         all_decompositions: Find first decompositions or all of them
+
+    Returns:
+    --------
+
     """
     # make sure that we got function of n variables
     main_log.debug(
@@ -587,7 +823,9 @@ def find_decompositions(
         main_log.debug('Function is not decomposable')
         return
 
+    # fictitious variable
     degenerative_decomposition: list[tuple[int, int]] = [h[0] for h in h_x if h[-1] == 1]
+    # non-degenerate function
     classic_decomposition: list[tuple[int, int]] = [h[0] for h in h_x if h[-1] == 2]
     main_log.debug(
         'degenerative decompose h(x): {degenerative_decomposition} '
@@ -595,6 +833,7 @@ def find_decompositions(
         degenerative_decomposition=degenerative_decomposition,
         classic_decomposition=classic_decomposition,
     )
+    return degenerative_decomposition, classic_decomposition
 
 
 @log_calls(logger_name=main_log, level='DEBUG')
@@ -733,37 +972,19 @@ def count_amount_test() -> None:
 
 
 @log_calls(logger_name=main_log, level='DEBUG')
-def is_non_degenerate(f_int: int, number_of_variables: Integer) -> bool:
+def is_non_degenerate(bool_func: 'BooleanFunction', number_of_variables: int) -> bool:
     """Check if function not degenerate.
 
     Args:
     -----
-        f_int: function with n variables
+        bool_func: boolean function
         number_of_variables: amount of variables in function
 
     Returns:
     --------
-        bool is degenerate or not
+        True/False
     """
-    # Check each variable (i)
-    for i in range(number_of_variables):
-        is_essential = False
-        # distance between 2 vectors that are different only in x_index component
-        step = 1 << i
-
-        for j in range(1 << number_of_variables):
-            # comparing function value in those 2 vectors
-            # if they are not equal then variable is essential
-            # note: same as (j // step) % 2 == 0
-            # note: same as table[j] != table[j + step]
-            if not (j & step) and ((f_int >> j) & 1) != ((f_int >> (j + step)) & 1):
-                is_essential = True
-                break
-
-        if not is_essential:
-            return False
-
-    return True
+    return len(bool_func.algebraic_normal_form().variables()) == number_of_variables
 
 
 def random_shit() -> None:

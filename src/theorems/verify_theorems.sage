@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=wrong-import-order
+# mypy: disable-error-code="import-not-found"
 """Theorems that must be satisfied any time."""
 
 from typing import TYPE_CHECKING

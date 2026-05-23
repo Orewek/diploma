@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable="wrong-import-order"
 """Loggers."""
 
 import sys
@@ -23,7 +24,7 @@ for log_file in clean_logs:
     with open(log_file, 'w', encoding='utf-8') as f:
         pass
 
-DEFAULT_LOGGING_LEVEL: str = 'DEBUG' if 'pytest' in sys.modules else 'DEBUG'
+DEFAULT_LOGGING_LEVEL: str = 'DEBUG' if 'pytest' in sys.modules else 'INFO'
 
 
 # type annotation for each logger
@@ -48,7 +49,7 @@ loggers: LoggersConfig = {
     'main': {
         'logger': logger.bind(type='main'),
         'level': DEFAULT_LOGGING_LEVEL,
-        'output': 'file|console',
+        'output': 'file',
     },
 }
 

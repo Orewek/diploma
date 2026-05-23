@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=wrong-import-order
+# mypy: disable-error-code="import-not-found"
 """Theorems that must be satisfied under some condition."""
 
 import operator
@@ -56,7 +56,7 @@ def theorem_convolution(
             w_f[x] * w_g[operator.xor(x, u_derivative)]
             for x in range(1 << number_of_variables)
         )
-        w_h_from_convolution.append(total // (1 << number_of_variables))
+        w_h_from_convolution.append(total / (1 << number_of_variables))
 
     main_log.debug(
         'Calculated w_h from convolution: {w_h_from_convolution}',

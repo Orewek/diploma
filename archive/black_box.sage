@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=wrong-import-order
 """check module."""
 
 from pathlib import Path

@@ -24,3 +24,4 @@ Makefile
 .pytest_cache
 
 *.sage.py
+dump.sage

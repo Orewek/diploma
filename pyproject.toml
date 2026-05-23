@@ -122,3 +122,9 @@ disable_error_code = [
     "name-defined",]
 
 exclude = "git.*|env."
+
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore"
+]

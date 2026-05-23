@@ -1,5 +1,10 @@
-from pathlib import Path
+# -*- coding: utf-8 -*-
+"""Load some files with functions."""
 import sys
+from pathlib import Path
+
+from sage.misc.persist import load
+
 
 if 'INIT_FILES_LOADED' not in globals():
     globals()['INIT_FILES_LOADED'] = True
@@ -14,6 +19,5 @@ if 'INIT_FILES_LOADED' not in globals():
 
     sys.path.append(str(project_root / 'src'))
 
-    load(str(project_root / "src/some_checks.sage"))
-    load(str(project_root / "src/main.sage"))
-    load(str(project_root / "src/decorators.py"))
+    load(str(project_root / 'src/some_checks.py'))
+    load(str(project_root / 'src/decorators.py'))

@@ -1,31 +1,53 @@
 # -*- coding: utf-8 -*-
-# mypy: disable-error-code='import-not-found'
 """Test funcs from main_dot_sage."""
 
 from pathlib import Path
 
 import pytest
-from sage.all import *
-from sage.crypto.boolean_function import (
-    BooleanFunction,
-)
+
+from sage.misc.persist import load
+from sage.crypto.boolean_function import BooleanFunction
 
 
 def load_init() -> None:
     current_path: Path = Path(__file__).resolve().parent
-    init_path = current_path.parent / 'init_files.sage'
+    init_path = current_path.parent / 'init_files.py'
 
     if init_path.exists() is False:
-        init_path = Path(__file__).resolve().parent / 'init_files.sage'
+        init_path = Path(__file__).resolve().parent / 'init_files.py'
 
     if init_path:
         load(str(init_path))
 
     else:
-        print('Warning: init_files.sage not found')
+        print('Warning: init_files.py not found')
 
 
 load_init()
+
+
+from src.main import (
+    is_without_forbidden,
+    find_best_rho_and_theta,
+    is_hyper_bent,
+    satisfies_pc_l,
+    satisfies_pc_l_order_k,
+    sac,
+    get_ci_function,
+    get_intersecting_spectral,
+    fwht,
+    fast_sylvester_hadamard,
+    check_uncorrelated_degree_k,
+    cross_correlation_u,
+    all_cross_correlations,
+    check_perfectly_uncorrelated,
+    get_fourier_coefficients,
+    get_function_weight,
+    get_distance_between_functions,
+    check_regularity,
+    find_decompositions,
+    is_non_degenerate,
+)
 
 
 @pytest.mark.parametrize('hex_str', [
@@ -113,16 +135,16 @@ def test_satisfies_pc_l(hex_str: str) -> None:
     assert satisfies_pc_l(bool_func) > 0
 
 
-@pytest.mark.parametrize('hex_str, k, l', [
+@pytest.mark.parametrize('hex_str, k_order, l_criteria', [
     ('17', 1, 2), ('18', 1, 2), ('24', 1, 2), ('2b', 1, 2),
     ('42', 1, 2), ('4d', 1, 2), ('71', 1, 2), ('7e', 1, 2),
     ('81', 1, 2), ('8e', 1, 2), ('b2', 1, 2), ('bd', 1, 2),
     ('d4', 1, 2), ('db', 1, 2), ('e7', 1, 2), ('e8', 1, 2),
 ])
-def test_satisfies_pc_l_order_k(hex_str: str, k: int, l: int):
+def test_satisfies_pc_l_order_k(hex_str: str, k_order: int, l_criteria: int) -> None:
     """Test func."""
-    f = BooleanFunction(hex_str)
-    res = satisfies_pc_l_order_k(f, l, k)
+    bool_func = BooleanFunction(hex_str)
+    res = satisfies_pc_l_order_k(bool_func, l_criteria, k_order)
 
     assert res is True
 
@@ -157,8 +179,8 @@ def test_sac(hex_str: str) -> None:
 ])
 def test_get_ci_function(hex_str: str) -> None:
     """Test func."""
-    f = BooleanFunction(hex_str)
-    assert get_ci_function(f) == []
+    bool_func = BooleanFunction(hex_str)
+    assert get_ci_function(bool_func) == []
 
 
 @pytest.mark.parametrize('hex_str_1, hex_str_2', [
@@ -193,7 +215,6 @@ def test_fwht() -> None:
 
 def test_fast_sylvester_hadamard() -> None:
     """Test func."""
-
     assert 1 == 1
 
 
@@ -309,9 +330,10 @@ def test_cross_correlation_u(hex_str_1: str, hex_str_2: str, u_der: int) -> None
     [-4, -4, -4, -4], [-2, -2, -2, -2], [-2, -2, -2, -2], [0, 0, 0, 0],
     [-2, -2, -2, -2], [0, 0, 0, 0], [0, 0, 0, 0], [2, 2, 2, 2],
     [-2, -2, -2, -2], [0, 0, 0, 0], [0, 0, 0, 0], [2, 2, 2, 2],
-    [0, 0, 0, 0], [2, 2, 2, 2], [2, 2, 2, 2], [4, 4, 4, 4],   
+    [0, 0, 0, 0], [2, 2, 2, 2], [2, 2, 2, 2], [4, 4, 4, 4],
+
 ]))
-def test_all_cross_correlations(index, expected) -> None:
+def test_all_cross_correlations(index: int, expected: int) -> None:
     """Test func."""
     bool_func_1 = BooleanFunction(f'{index // 16:x}')
     bool_func_2 = BooleanFunction(f'{index % 16:x}')
@@ -398,9 +420,9 @@ def test_get_function_weight(hex_str: str, expected: int) -> None:
 
 
 @pytest.mark.parametrize('index, expected', enumerate(
-    [0, 1, 1, 2, 1, 0, 2, 1, 1, 2, 0, 1, 2, 1, 1, 0]
+    [0, 1, 1, 2, 1, 0, 2, 1, 1, 2, 0, 1, 2, 1, 1, 0],
 ))
-def test_get_distance_between_functions(index, expected) -> None:
+def test_get_distance_between_functions(index: int, expected: int) -> None:
     """Test func."""
     bool_func_1 = BooleanFunction(f'{index // 4:x}')
     bool_func_2 = BooleanFunction(f'{index % 4:x}')
@@ -462,25 +484,3 @@ def test_is_non_degenerate(hex_str: str) -> None:
     """Test func."""
     bool_func = BooleanFunction(hex_str)
     assert is_non_degenerate(bool_func, 3) is False
-
-
-@count_time()
-def check_list() -> list:
-    al_list: list = []
-    n: int = 1
-    for i in range(1 << (1 << n)):
-        hex_str: str = format(i, f'0{(1 << n) // 4}x')
-        f = BooleanFunction(hex_str)
-        for k in range(1 << (1 << n)):
-            hex_str_2: str = format(k, f'0{(1 << n) // 4}x')
-            f2 = BooleanFunction(hex_str_2)
-            res = get_distance_between_functions(f, f2)
-            print(res)
-            # print(hex_str, hex_str_2)
-            #if res is not None:
-            #    al_list.append([hex_str, hex_str_2])
-
-    return al_list
-
-#res = check_list()
-#print(res) 

@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-# mypy: disable-error-code="import-not-found"
 """Verification for many things in code."""
-
 
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from sage.crypto.boolean_function import BooleanFunction
     from loguru._logger import Logger
+
+    from sage.crypto.boolean_function import BooleanFunction
 
 
 def check_func_equal_amount_vars(
@@ -15,7 +14,7 @@ def check_func_equal_amount_vars(
         bool_func_2: 'BooleanFunction',
         log: 'Logger | None' = None,
 ) -> bool:
-    """check if f and g have same amount of variables
+    """Check if f and g have same amount of variables.
 
     Args:
     -----

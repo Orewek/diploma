@@ -14,16 +14,16 @@ if TYPE_CHECKING:
 
 def load_init():
     current_path: Path = Path(__file__).resolve().parent
-    init_path = current_path.parent / 'init_files.sage'
+    init_path = current_path.parent / 'init_files.py'
 
     if init_path.exists() is False:
-        init_path = Path(__file__).resolve().parent / 'init_files.sage'
+        init_path = Path(__file__).resolve().parent / 'init_files.py'
 
     if init_path:
         load(str(init_path))
 
     else:
-        print('Warning: init_files.sage not found')
+        print('Warning: init_files.py not found')
 
 
 load_init()

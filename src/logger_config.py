@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# pylint: disable="wrong-import-order"
 """Loggers."""
 
 import sys
@@ -64,7 +63,7 @@ for name, config in loggers.items():
             format='{time:mm:ss.SSS} | {level} | {message} | {function}',
             level=config['level'],
             colorize=True,
-            filter=lambda record, n=name: record['extra'].get('type') == n,  # type: ignore
+            filter=lambda record, n=name: record['extra'].get('type') == n,
         )
     # create loggers that put info into file
     if 'file' in config['output']:
@@ -73,7 +72,7 @@ for name, config in loggers.items():
             format='{time:mm:ss.SSS} | {level} | {message} | {function}',
             level=config['level'],
             colorize=True,
-            filter=lambda record, n=name: record['extra'].get('type') == n,  # type: ignore
+            filter=lambda record, n=name: record['extra'].get('type') == n,
         )
 
 # create each logger

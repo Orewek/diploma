@@ -84,6 +84,10 @@ exclude = [
     ".mypy_cache",
     "*.code-workspace"]
 
+per-file-ignores = [
+    "tests/test_main.py:PT006"
+]
+
 filename = ["*.sage", "*.py"]
 
 show-source = false

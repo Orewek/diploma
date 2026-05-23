@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-# mypy: disable-error-code="import-not-found"
 """check module."""
 
 from pathlib import Path
 
 import operator
 import itertools
+
+from sage.misc.persist import load
 
 from typing import TYPE_CHECKING
 
@@ -16,20 +17,21 @@ if TYPE_CHECKING:
 from sage.crypto.boolean_function import BooleanFunction
 
 from src.logger_config import main_log
+from src.main import is_hyper_bent
 
 
 def load_init():
     current_path: Path = Path(__file__).resolve().parent
-    init_path = current_path.parent / 'init_files.sage'
+    init_path = current_path.parent / 'init_files.py'
 
     if init_path.exists() is False:
-        init_path = Path(__file__).resolve().parent / 'init_files.sage'
+        init_path = Path(__file__).resolve().parent / 'init_files.py'
 
     if init_path:
         load(str(init_path))
 
     else:
-        print('Warning: init_files.sage not found')
+        print('Warning: init_files.py not found')
 
 
 load_init()

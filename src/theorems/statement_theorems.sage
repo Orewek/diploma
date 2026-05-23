@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# mypy: disable-error-code="import-not-found"
 """Theorems that must be satisfied under some condition."""
 
 import operator

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# mypy: disable-error-code="import-not-found"
 """Theorems that must be satisfied any time."""
 
 from typing import TYPE_CHECKING

@@ -25,3 +25,6 @@ Makefile
 
 *.sage.py
 dump.sage
+
+exam/linear_stat_analog/*
+!exam/linear_stat_analog/*.py

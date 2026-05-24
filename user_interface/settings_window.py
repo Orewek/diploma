@@ -18,6 +18,9 @@ class SettingsWindow(ctk.CTkToplevel):
             current_app_size: int,
             current_out_size: int,
             current_timeout: int | float,
+            use_sac: bool,       # НОВОЕ: текущее состояние SAC
+            use_forbidden: bool, # НОВОЕ: текущее состояние Forbidden
+            use_rt: bool,        # НОВОЕ: текущее состояние Rho and Theta
             on_apply_callback: 'Callable[[str, int | float], None]',
     ) -> None:
         """Initialize settings configuration layout, center modal window & map control triggers.
@@ -33,12 +36,10 @@ class SettingsWindow(ctk.CTkToplevel):
         # setup a window
         super().__init__(parent)
         self.title('Settings')
-        self.geometry('650x300')
+        self.geometry('650x400')
         self.resizable(False, False)
-
         # save callback to send changes back to main window
         self.on_apply_callback = on_apply_callback
-
         # make a window as the module
         self.transient(parent)
         # stop all operations till windows pops up on the screen
@@ -104,6 +105,27 @@ class SettingsWindow(ctk.CTkToplevel):
         )
         self.btn_apply_timeout.pack(side='left', padx=10)
 
+        self.lbl_toggles_title = ctk.CTkLabel(
+            self, text='Enable / Disable properties:', font=ctk.CTkFont(weight='bold', size=14)
+        )
+        self.lbl_toggles_title.pack(pady=(20, 5), padx=20, anchor='w')
+
+        self.toggles_frame = ctk.CTkFrame(self, fg_color='transparent')
+        self.toggles_frame.pack(pady=5, padx=20, fill='x')
+
+        self.sac_var = ctk.BooleanVar(value=use_sac)
+        self.cb_sac = ctk.CTkCheckBox(self.toggles_frame, text="SAC", variable=self.sac_var, command=self.apply_toggles)
+        self.cb_sac.pack(side='left', padx=10)
+
+        self.forbidden_var = ctk.BooleanVar(value=use_forbidden)
+        self.cb_forbidden = ctk.CTkCheckBox(self.toggles_frame, text="Without Forbidden", variable=self.forbidden_var, command=self.apply_toggles)
+        self.cb_forbidden.pack(side='left', padx=10)
+
+        self.rt_var = ctk.BooleanVar(value=use_rt)
+        self.cb_rt = ctk.CTkCheckBox(self.toggles_frame, text="Rho and Theta", variable=self.rt_var, command=self.apply_toggles)
+        self.cb_rt.pack(side='left', padx=10)
+
+
     def apply_setting(self, setting_type: str) -> None:
         """Method to validate and save settings."""
         # ignore the error to not drop the program
@@ -146,3 +168,11 @@ class SettingsWindow(ctk.CTkToplevel):
 
         # how long saved! need to be shown on the screen
         self.after(1500, reset)
+
+    def apply_toggles(self) -> None:
+        """Передает состояние чекбоксов в главное окно при любом клике по ним."""
+        self.on_apply_callback('toggles', {
+            'sac': self.sac_var.get(),
+            'forbidden': self.forbidden_var.get(),
+            'rt': self.rt_var.get()
+        })

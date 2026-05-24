@@ -70,13 +70,15 @@ def is_without_forbidden(bool_func: 'BooleanFunction') -> bool:
     u_first = vector(GF(2), [1] + [0] * (number_of_variables - 1))
 
     return any(
-        get_function_weight(bool_func.derivative(u_first)) == (1 << number_of_variables),
-        get_function_weight(bool_func.derivative(u_last)) == (1 << number_of_variables),
+        [
+            get_function_weight(bool_func.derivative(u_first)) == (1 << number_of_variables),
+            get_function_weight(bool_func.derivative(u_last)) == (1 << number_of_variables),
+        ]
     )
 
 
 def find_best_rho_and_theta(bool_func: 'BooleanFunction') -> None | dict:
-    """Find rho and theha that .
+    """Find rho and theha that.
 
     Args:
     -----

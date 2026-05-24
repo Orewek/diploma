@@ -1,49 +1,102 @@
-import os
-import sys
-import time
-from sage.crypto.boolean_function import random_boolean_function
-from sage.crypto.boolean_function import BooleanFunction
+# -*- coding: utf-8 -*-
+"""module for crypto analyze and output the result."""
+import multiprocessing
+import time as tm
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from src.main import sac
+from sage.crypto.boolean_function import (
+    BooleanFunction,
+    random_boolean_function,
+)
+
+from src.main import (
+    find_best_rho_and_theta,
+    is_without_forbidden,
+    sac,
+)
 
 
-def _format_result(sac_order, b):
-    b_hex = b.truth_table(format='hex')
+def _format_result(
+        sac_order: int,
+        is_wf: bool,
+        bool_func: 'BooleanFunction',
+        rt_data: None | dict,
+) -> str:
+    """Format the compiled crypto properties of a bool func into a multiline string.
+
+    Args:
+    -----
+        sac_order:
+        is_wf:
+        bool_func:
+        rt_data:
+
+    Returns:
+    --------
+        output text
+    """
+    hex_str: str = bool_func.truth_table(format='hex')
     return (
-        f"SAC Order (l):               {sac_order}\n\n"
-        f"Function Vector (Hex):\n\n{b_hex}"
+        f"""
+        SAC(l):                      {sac_order}
+        Without Forbidden:           {is_wf}
+        Rho and Theta:               {rt_data}
+        Function (Hex):              {hex_str}
+        """
     )
 
-def analyze_boolean_function_stream(n_vars, l_min, l_max, timeout):
-    start_time = time.time()
-    
-    if n_vars < 5:
-        total_functions = 1 << (1 << n_vars)
-        hex_len = (1 << n_vars) // 4
-        for i in range(total_functions):
-            if time.time() - start_time > float(timeout):
-                raise TimeoutError(f"Searching took more than {timeout} seconds...")
-            
-            hex_str = f"{i:0{hex_len}x}"
-            b = BooleanFunction(hex_str)
-            sac_order = sac(b)
-            if l_min <= sac_order <= l_max:
-                # Используем помощника
-                yield 0, _format_result(sac_order, b) 
-                return
-                
-        raise ValueError("Full search completed. No function found.")
 
-    else:
-        while True:
-            if time.time() - start_time > float(timeout):
-                raise TimeoutError(f"Searching took more than {timeout} seconds...")
-                
-            b = random_boolean_function(n_vars)
-            sac_order = sac(b)
-            
-            if l_min <= sac_order <= l_max:
-                # Используем помощника
-                yield 0, _format_result(sac_order, b)
-                return
+def search_worker(
+        queue: multiprocessing.Queue,
+        amount_of_variables: int,
+        l_criteria_min: int,
+        l_criteria_max: int,
+        timeout: float,
+        forbidden_filter: None | bool,
+        rt_filter: str,
+) -> None:
+    """Generate rand bool func & filter them by strict crypto properties until timeout.
+
+    Args:
+    -----
+        queue: multiprocessing.Queue
+        amount_of_variables: int
+        l_criteria_min: int
+        l_criteria_max: int
+        timeout: float
+        forbidden_filter: None/bool
+        rt_filter: str
+    """
+    start_time: float = tm.time()
+
+    while True:
+        # if reach time limit -> stop calculation
+        if tm.time() - start_time > float(timeout):
+            return
+
+        bool_func: 'BooleanFunction' = random_boolean_function(amount_of_variables)
+
+        sac_order: int = sac(bool_func)
+        if not l_criteria_min <= sac_order <= l_criteria_max:
+            continue
+
+        is_wf: bool = is_without_forbidden(bool_func)
+        if forbidden_filter is not None and is_wf != forbidden_filter:
+            continue
+
+        rt_result: None | dict = find_best_rho_and_theta(bool_func)
+
+        if rt_filter == 'Exist' and rt_result is None:
+            continue
+
+        if rt_filter == 'Not' and rt_result is not None:
+            continue
+
+        queue.put({
+            'text': _format_result(
+                sac_order,
+                is_wf,
+                bool_func,
+                rt_result,
+            ),
+        })
+        return

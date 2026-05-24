@@ -1,142 +1,148 @@
-import tkinter as tk
+# -*- coding: utf-8 -*-
+"""Setting window module."""
+import contextlib
+from typing import TYPE_CHECKING
 
-class SettingsWindow(tk.Toplevel):
+import customtkinter as ctk
 
-    def __init__(self, parent):
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+
+class SettingsWindow(ctk.CTkToplevel):
+    """Modal  window for configuring app font sizes & worker process search timeout limits."""
+
+    def __init__(
+            self,
+            parent: ctk.CTk,
+            current_app_size: int,
+            current_out_size: int,
+            current_timeout: int | float,
+            on_apply_callback: 'Callable[[str, int | float], None]',
+    ) -> None:
+        """Initialize settings configuration layout, center modal window & map control triggers.
+
+        Args:
+        -----
+            parent:
+            current_app_size: font size for app
+            current_out_size: font size for output
+            current_timeout: time cap for calculation
+            on_apply_callback:
+        """
+        # setup a window
         super().__init__(parent)
-        self.parent = parent
-        self.title("Settings")
-        self.geometry("650x280")
+        self.title('Settings')
+        self.geometry('650x300')
         self.resizable(False, False)
-        self.configure(bg="#242424")
-        
+
+        # save callback to send changes back to main window
+        self.on_apply_callback = on_apply_callback
+
+        # make a window as the module
         self.transient(parent)
+        # stop all operations till windows pops up on the screen
         self.wait_visibility()
+        # grab all inputs, while window is open, user can interact with main window
         self.grab_set()
 
+        # pop the window on the center of the main window
         parent.update_idletasks()
         p_width = parent.winfo_width()
         p_height = parent.winfo_height()
         p_x = parent.winfo_x()
         p_y = parent.winfo_y()
-        
+
         x = p_x + (p_width // 2) - (650 // 2)
-        y = p_y + (p_height // 2) - (280 // 2)
-        self.geometry(f"650x280+{x}+{y}")
+        y = p_y + (p_height // 2) - (300 // 2)
+        self.geometry(f'+{x}+{y}')
 
-        self.lbl_title = tk.Label(
-            self, text="Font Size configuration:", 
-            font=("Arial", 14, "bold"), bg="#242424", fg="#ffffff"
+        # font settings
+        self.lbl_title = ctk.CTkLabel(
+            self, text='Font Size configuration:', font=ctk.CTkFont(weight='bold', size=14),
         )
-        self.lbl_title.pack(pady=(15, 5), padx=20, anchor="w")
+        self.lbl_title.pack(pady=(20, 5), padx=20, anchor='w')
 
-        self.row_frame = tk.Frame(self, bg="#242424")
-        self.row_frame.pack(pady=5, padx=20, fill="x")
+        self.row_frame = ctk.CTkFrame(self, fg_color='transparent')
+        self.row_frame.pack(pady=5, padx=20, fill='x')
 
-        self.size_entry = tk.Entry(
-            self.row_frame, font=("Arial", 16), bg="#1d1e1e", fg="#ffffff",
-            insertbackground="white", relief="flat", bd=2, width=8
+        self.size_entry = ctk.CTkEntry(self.row_frame, font=('Arial', 16), width=80, height=40)
+        self.size_entry.pack(side='left', padx=(0, 10))
+        self.size_entry.insert(0, str(current_app_size))
+
+        self.btn_apply_output = ctk.CTkButton(
+            self.row_frame, text='Apply to Output', height=40, width=150,
+            command=lambda: self.apply_setting('output_font'),
         )
-        self.size_entry.pack(side="left", padx=(10, 10), ipady=8)
-        self.size_entry.insert(0, str(parent.app_font_size))
+        self.btn_apply_output.pack(side='left', padx=10)
 
-        self.btn_apply_output = tk.Button(
-            self.row_frame, text="Apply to Output", command=self.apply_font_output,
-            font=("Arial", 14), bg="#2b2b2b", fg="#ffffff", 
-            activebackground="#404040", activeforeground="#ffffff",
-            relief="flat", bd=0, cursor="hand2", width=16
+        self.btn_apply_app = ctk.CTkButton(
+            self.row_frame, text='Apply to App', height=40, width=150,
+            command=lambda: self.apply_setting('app_font'),
         )
-        self.btn_apply_output.pack(side="left", padx=10, ipady=6)
+        self.btn_apply_app.pack(side='left', padx=10)
 
-        self.btn_apply_app = tk.Button(
-            self.row_frame, text="Apply to App", command=self.apply_font_app,
-            font=("Arial", 14, "bold"), bg="#1f77b4", fg="#ffffff",
-            activebackground="#145a8a", activeforeground="#ffffff",
-            relief="flat", bd=0, cursor="hand2", width=16
+        self.lbl_timeout_title = ctk.CTkLabel(
+            self,
+            text='Search Timeout configuration (seconds):',
+            font=ctk.CTkFont(weight='bold', size=14),
         )
-        self.btn_apply_app.pack(side="left", padx=10, ipady=6)
+        self.lbl_timeout_title.pack(pady=(20, 5), padx=20, anchor='w')
 
-        self.lbl_timeout_title = tk.Label(
-            self, text="Search Timeout configuration (seconds):", 
-            font=("Arial", 14, "bold"), bg="#242424", fg="#ffffff"
+        self.timeout_frame = ctk.CTkFrame(self, fg_color='transparent')
+        self.timeout_frame.pack(pady=5, padx=20, fill='x')
+
+        self.timeout_entry = ctk.CTkEntry(
+            self.timeout_frame, font=('Arial', 16), width=80, height=40,
         )
-        self.lbl_timeout_title.pack(pady=(20, 5), padx=20, anchor="w")
+        self.timeout_entry.pack(side='left', padx=(0, 10))
+        self.timeout_entry.insert(0, str(current_timeout))
 
-        self.timeout_frame = tk.Frame(self, bg="#242424")
-        self.timeout_frame.pack(pady=5, padx=20, fill="x")
-
-        self.timeout_entry = tk.Entry(
-            self.timeout_frame, font=("Arial", 16), bg="#1d1e1e", fg="#ffffff",
-            insertbackground="white", relief="flat", bd=2, width=8
+        self.btn_apply_timeout = ctk.CTkButton(
+            self.timeout_frame, text='Save Timeout', height=40, width=320,
+            command=lambda: self.apply_setting('timeout'),
         )
-        self.timeout_entry.pack(side="left", padx=(10, 10), ipady=8)
-        self.timeout_entry.insert(0, str(parent.search_timeout))
+        self.btn_apply_timeout.pack(side='left', padx=10)
 
-        self.btn_apply_timeout = tk.Button(
-            self.timeout_frame, text="Save Timeout", command=self.apply_timeout,
-            font=("Arial", 14, "bold"), bg="#1f77b4", fg="#ffffff",
-            activebackground="#145a8a", activeforeground="#ffffff",
-            relief="flat", bd=0, cursor="hand2", width=34
-        )
-        self.btn_apply_timeout.pack(side="left", padx=10, ipady=6)
+    def apply_setting(self, setting_type: str) -> None:
+        """Method to validate and save settings."""
+        # ignore the error to not drop the program
+        with contextlib.suppress(ValueError):
+            if setting_type in ('output_font', 'app_font'):
+                font_width: int = int(self.size_entry.get().strip())
+                if font_width <= 4:
+                    raise ValueError
 
-    def apply_font_output(self):
-        user_size = self.size_entry.get().strip()
-        if not user_size.isdigit() or int(user_size) <= 4:
-            return
-            
-        self.btn_apply_output.config(text="Saved!", bg="#2ca02c")
-        
-        def reset():
+                # raise callback
+                self.on_apply_callback(setting_type, font_width)
+                # animate success
+                btn = self.btn_apply_output if setting_type == 'output_font' else self.btn_apply_app
+                self._animate_success(
+                    btn, 'Apply to Output' if setting_type == 'output_font' else 'Apply to App',
+                )
+
+            elif setting_type == 'timeout':
+                timeout_time: int = int(self.timeout_entry.get().strip())
+                if timeout_time <= 0:
+                    raise ValueError
+
+                self.on_apply_callback('timeout', timeout_time)
+                self._animate_success(self.btn_apply_timeout, 'Save Timeout')
+
+    def _animate_success(self, button: ctk.CTkButton, default_text: str) -> None:
+        """Animation for successful changes & saves in settings."""
+        original_color = button.cget('fg_color')
+        original_hover = button.cget('hover_color')
+
+        button.configure(text='Saved!', fg_color='#2ca02c', hover_color='#238023')
+
+        def reset() -> None:
+            """Restore targeted settings button configuration back to its original state."""
+            # if user closes the window before 1.5s elapsed, button will no longer exist
             if self.winfo_exists():
-                self.btn_apply_output.config(text="Apply to Output", bg="#2b2b2b")
+                button.configure(
+                    text=default_text, fg_color=original_color, hover_color=original_hover,
+                )
+
+        # how long saved! need to be shown on the screen
         self.after(1500, reset)
-        
-        self.update_idletasks()
-        
-        try:
-            self.parent.output_font_size = int(user_size)
-            self.parent.txt_output.configure(font=("Courier", self.parent.output_font_size))
-        except Exception as e:
-            pass
-
-    def apply_font_app(self):
-        user_size = self.size_entry.get().strip()
-        if not user_size.isdigit() or int(user_size) <= 4:
-            return
-            
-        self.btn_apply_app.config(text="Saved!", bg="#2ca02c")
-        
-        def reset():
-            if self.winfo_exists():
-                self.btn_apply_app.config(text="Apply to App", bg="#1f77b4")
-        self.after(1500, reset)
-        
-        self.update_idletasks()
-        
-        try:
-            self.parent.update_application_font(int(user_size))
-        except Exception as e:
-            pass
-
-    def _animate_success(self, button, default_text, default_bg):
-            button.config(text="Saved!", bg="#2ca02c")
-
-            def reset():
-                if self.winfo_exists():
-                    button.config(text=default_text, bg=default_bg)
-
-            self.after(1500, reset)
-            self.update_idletasks()
-
-    def apply_timeout(self):
-            user_timeout = self.timeout_entry.get().strip()
-            if not user_timeout.isdigit() or int(user_timeout) <= 0:
-                return
-                
-            self._animate_success(self.btn_apply_timeout, "Save Timeout", "#1f77b4")
-            
-            try:
-                self.parent.search_timeout = int(user_timeout)
-            except Exception as e:
-                print(f"Error applying timeout: {e}")

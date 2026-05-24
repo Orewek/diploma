@@ -72,7 +72,7 @@ def max_sum_corr_theorem(
         hexval2=bool_func_2.truth_table(format='hex'),
         nvals2=bool_func_2.nvariables(),
     )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
+    if not check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log):
         return None
 
     sum_sq_cross_corr: int = sum(x**2 for x in all_cross_correlations(bool_func_1, bool_func_2))
@@ -110,7 +110,7 @@ def theorem_about_cross_correlation(
         hexval2=bool_func_2.truth_table(format='hex'),
         nvals2=bool_func_2.nvariables(),
     )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
+    if not check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log):
         return None
 
     vector_of_cross_correlations: list[int] | None = all_cross_correlations(

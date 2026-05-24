@@ -16,7 +16,7 @@ def load_init():
     current_path: Path = Path(__file__).resolve().parent
     init_path = current_path.parent / 'init_files.py'
 
-    if init_path.exists() is False:
+    if not init_path.exists():
         init_path = Path(__file__).resolve().parent / 'init_files.py'
 
     if init_path:
@@ -191,7 +191,7 @@ if __name__ == "__main__":
             high_bound = min(degree_r, high_bound)
             seen_true = True
 
-        if all(p == 1 for p in points) and seen_true is False:
+        if all(p == 1 for p in points) and not seen_true
             low_bound = degree_r
             high_bound = number_of_variables
 

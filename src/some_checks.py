@@ -28,7 +28,7 @@ def check_func_equal_amount_vars(
     """
     res: bool = bool_func_1.nvariables() == bool_func_2.nvariables()
 
-    if res is False and log is not None:
+    if not res and log is not None:
         log.debug('Bool Functions dont have same amount of variables')
 
     return res

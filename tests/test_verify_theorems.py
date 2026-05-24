@@ -20,7 +20,7 @@ def load_init() -> None:
     current_path: Path = Path(__file__).resolve().parent
     init_path = current_path.parent / 'init_files.py'
 
-    if init_path.exists() is False:
+    if not init_path.exists():
         init_path = Path(__file__).resolve().parent / 'init_files.py'
 
     if init_path:

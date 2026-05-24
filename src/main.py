@@ -35,7 +35,7 @@ def load_init() -> None:
     current_path: Path = Path(__file__).resolve().parent
     init_path = current_path.parent / 'init_files.py'
 
-    if init_path.exists() is False:
+    if not init_path.exists():
         init_path = Path(__file__).resolve().parent / 'init_files.py'
 
     if init_path:
@@ -70,10 +70,8 @@ def is_without_forbidden(bool_func: 'BooleanFunction') -> bool:
     u_first = vector(GF(2), [1] + [0] * (number_of_variables - 1))
 
     return any(
-        [
-            get_function_weight(bool_func.derivative(u_first)) == (1 << number_of_variables),
-            get_function_weight(bool_func.derivative(u_last)) == (1 << number_of_variables),
-        ],
+        get_function_weight(bool_func.derivative(u_first)) == (1 << number_of_variables),
+        get_function_weight(bool_func.derivative(u_last)) == (1 << number_of_variables),
     )
 
 
@@ -316,8 +314,7 @@ def sac(bool_func: 'BooleanFunction') -> int:
         hex_value=bool_func.truth_table(format='hex'),
         number_of_variables=number_of_variables,
     )
-    poly: 'BooleanPolynomial' = bool_func.algebraic_normal_form()
-    variables_of_bool_func: tuple['BooleanMonomial'] = poly.parent().gens()
+    tt = bool_func.truth_table()
     for k_degree in range(1, number_of_variables):
         # Going through all combinations of k variables that we are going to fix
         for indices in itertools.combinations(range(number_of_variables), k_degree):
@@ -325,27 +322,19 @@ def sac(bool_func: 'BooleanFunction') -> int:
             # There is 1 << k options to do that
             for values in itertools.product([0, 1], repeat=k_degree):
                 # Put variables that we have chosen into new polynomial
-                sub_poly: 'BooleanPolynomial' = poly.subs(
-                    {variables_of_bool_func[idx]: val for idx, val in zip(indices, values)},
-                )
-                sub_anf: 'BooleanPolynomial' = BooleanFunction(sub_poly).algebraic_normal_form()
-                # sage still thinks that there are 'n' variables in polynomial even if some
-                # variable is 'missing' it is does not matter so to get a true amount of
-                # variables of subfunction (to correctly calculate truth table and derivatives)
-                # we have to create a new polynomial Ring with 'n - k' degree and put the
-                # variables that use the subfunction after that can create a new boolean
-                # function with and an old anf and even sage was thinking about the wrong amount
-                # of variables still and was correct
-                used_vars: tuple['BooleanMonomial', ...] = sub_anf.variables()
-                # Create a new derivative function
-                if len(used_vars) > 0:
-                    new_r: 'BooleanPolynomialRing' = BooleanPolynomialRing(
-                        len(used_vars),
-                        names=[str(v) for v in used_vars],
-                    )
-                    sub_bf: 'BooleanFunction' = BooleanFunction(new_r(str(sub_anf)))
+                mask = 0
+                target_bits = 0
+                for idx, val in zip(indices, values):
+                    mask |= (1 << idx)
+                    if val:
+                        target_bits |= (1 << idx)
 
-                else:
+                sub_tt = tuple(
+                    tt[i] for i in range(1 << number_of_variables)
+                    if (i & mask) == target_bits
+                )
+
+                if not any(sub_tt) or all(sub_tt):
                     # if subfunction uses no variables (equals to constant)
                     # it means subfunction cant be balanced
                     main_log.debug(
@@ -354,10 +343,12 @@ def sac(bool_func: 'BooleanFunction') -> int:
                     )
                     return k_degree - 1
 
+                sub_bf: 'BooleanFunction' = BooleanFunction(sub_tt)
+
                 act: tuple[int, ...] = sub_bf.autocorrelation()
                 # calculate autocorrelation and look at derivatives that wt(u) = 1
                 # so for n = 3 it is going to be [1 0 0] [0 1 0] [0 0 1]
-                if all(act[1 << i] == 0 for i in range(sub_bf.nvariables())) is False:
+                if not all(act[1 << i] == 0 for i in range(sub_bf.nvariables())):
                     main_log.debug(
                         'sub_func.derivatite(u) != 0, returning k=({k})',
                         k=k_degree - 1,
@@ -420,7 +411,7 @@ def get_intersecting_spectral(
         hexval2=bool_func_2.truth_table(format='hex'),
         nvals2=bool_func_2.nvariables(),
     )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
+    if not check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log):
         return None
 
     ci_f = set(get_ci_function(bool_func_1))
@@ -452,14 +443,15 @@ def fwht(vector: list[int]) -> list[int]:
     # Method that used to calculate the vector called
     # Butterfly algorithm / FFT
     number_of_components: int = len(vector)
+    fwht_vector = vector.copy()
     step = 1
     while step < number_of_components:
         for i in range(0, number_of_components, step << 1):
             for j in range(i, i + step):
-                x = vector[j]
-                y = vector[j + step]
-                vector[j] = x + y
-                vector[j + step] = x - y
+                x = fwht_vector[j]
+                y = fwht_vector[j + step]
+                fwht_vector[j] = x + y
+                fwht_vector[j + step] = x - y
 
         step <<= 1
 
@@ -518,7 +510,7 @@ def check_uncorrelated_degree_k(
         hexval2=bool_func_2.truth_table(format='hex'),
         nvals2=bool_func_2.nvariables(),
     )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
+    if not check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log):
         return None
 
     number_of_variables: int = bool_func_1.nvariables()
@@ -562,7 +554,7 @@ def cross_correlation_u(
         u_derivative=u_derivative,
         u_derivative_V_n=bin(u_derivative)[2:],
     )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
+    if not check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log):
         return None
 
     number_of_variables: int = bool_func_1.nvariables()
@@ -603,7 +595,7 @@ def all_cross_correlations(
         hexval2=bool_func_2.truth_table(format='hex'),
         nvals2=bool_func_2.nvariables(),
     )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
+    if not check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log):
         return None
 
     w_f = bool_func_1.walsh_hadamard_transform()
@@ -635,7 +627,7 @@ def check_perfectly_uncorrelated(
         hexval2=bool_func_2.truth_table(format='hex'),
         nvals2=bool_func_2.nvariables(),
     )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
+    if not check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log):
         return None
 
     return not any(all_cross_correlations(bool_func_1, bool_func_2)[1:])
@@ -664,7 +656,7 @@ def get_dot_product_functions(
         hexval2=bool_func_2.truth_table(format='hex'),
         nvals2=bool_func_2.nvariables(),
     )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
+    if not check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log):
         return None
 
     vector_1: 'Vector_mod_2_dense' = vector(GF(2), bool_func_1.truth_table())
@@ -753,7 +745,7 @@ def get_distance_between_functions(
         hexval2=bool_func_2.truth_table(format='hex'),
         nvals2=bool_func_2.nvariables(),
     )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
+    if not check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log):
         return None
 
     table_1: tuple[int, ...] = bool_func_1.truth_table()
@@ -1017,63 +1009,3 @@ def is_non_degenerate(bool_func: 'BooleanFunction', number_of_variables: int) ->
         True/False
     """
     return len(bool_func.algebraic_normal_form().variables()) == number_of_variables
-
-
-def random_shit() -> None:
-    B: 'BooleanFunction' = random_boolean_function(Integer(5))
-
-    f_absolute_correlation_values: list[tuple[Integer, Integer]] = sorted(
-        B.absolute_autocorrelation().items(),
-    )
-    f_absolute_indicator: Integer = B.absolute_indicator()
-    f_absolute_walsh_spectrum: list[tuple[Integer, Integer]] = sorted(
-        B.absolute_walsh_spectrum().items(),
-    )
-    f_algebraic_degree: Integer = B.algebraic_degree()
-    f_algebraic_immunity: Integer = B.algebraic_immunity()
-    f_algebraic_normal_form: 'BooleanPolynomial' = B.algebraic_normal_form()
-    f_annihilator: 'BooleanPolynomial | None' = B.annihilator(2)
-    f_autocorrelation: dict[Integer, Integer] = B.autocorrelation()
-    f_correlation_immunity: Integer = B.correlation_immunity()
-    f_derivative: BooleanFunction = B.derivative(1)
-    f_has_linear_structure: bool = B.has_linear_structure()
-    f_is_balanced: bool = B.is_balanced()
-    f_is_bent: bool = B.is_bent()
-    f_is_linear_structure: bool = B.is_linear_structure(1)
-    f_is_plateaued: bool = B.is_plateaued()
-    f_is_symmetric: bool = B.is_symmetric()
-    f_linear_structures: list[Integer] = B.linear_structures()
-    f_nonlinearity: Integer = B.nonlinearity()
-    f_nvariables: Integer = B.nvariables()
-    f_resiliency_order: Integer = B.resiliency_order()
-    f_sum_of_square_indicator: Integer = B.sum_of_square_indicator()
-    f_truth_table: list[int] = B.truth_table('int')
-    f_walsh_hadamard_transform: dict[Integer, Integer] = B.walsh_hadamard_transform()
-
-    print(
-        f"""
-        {f_absolute_correlation_values}
-        {f_absolute_indicator}
-        {f_absolute_walsh_spectrum}
-        {f_algebraic_degree}
-        {f_algebraic_immunity}
-        {f_algebraic_normal_form}
-        {f_annihilator}
-        {f_autocorrelation}
-        {f_correlation_immunity}
-        {f_derivative}
-        {f_has_linear_structure}
-        {f_is_balanced}
-        {f_is_bent}
-        {f_is_linear_structure}
-        {f_is_plateaued}
-        {f_is_symmetric}
-        {f_linear_structures}
-        {f_nonlinearity}
-        {f_nvariables}
-        {f_resiliency_order}
-        {f_sum_of_square_indicator}
-        {f_truth_table}
-        {f_walsh_hadamard_transform}
-        """,
-    )

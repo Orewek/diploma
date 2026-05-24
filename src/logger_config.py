@@ -9,7 +9,7 @@ from loguru import logger
 
 LOG_FOLDER: Path = Path(__file__).parent.parent / 'logs'
 
-if LOG_FOLDER.exists() is False:
+if not LOG_FOLDER.exists():
     LOG_FOLDER = Path(__file__).parent / 'logs'
 
 # paths to log files

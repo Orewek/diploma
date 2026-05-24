@@ -35,7 +35,7 @@ def theorem_convolution(
         hexval2=bool_func_2.truth_table(format='hex'),
         nvals2=bool_func_2.nvariables(),
     )
-    if check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log) is False:
+    if not check_func_equal_amount_vars(bool_func_1, bool_func_2, main_log):
         return None
 
     number_of_variables: int = bool_func_1.nvariables()

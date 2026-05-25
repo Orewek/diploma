@@ -457,7 +457,7 @@ def fwht(vector: list[int]) -> list[int]:
 
         step <<= 1
 
-    return vector
+    return fwht_vector
 
 
 @log_calls(logger_name=main_log, level='DEBUG')

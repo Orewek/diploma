@@ -1,0 +1,540 @@
+\documentclass[11pt]{article}\usepackage[utf8]{inputenc}\usepackage[russian]{babel}\usepackage{amsmath,amssymb,amsfonts}\usepackage{geometry}\usepackage{multicol}\geometry{top=1.5cm,bottom=1.5cm,left=1.2cm,right=1.2cm}\newcounter{NM}\newcommand{\Ex}[1]{\par\addtocounter{NM}{1}\noindent\parbox[c]{\columnwidth}{\hrule height .5pt width \columnwidth\smallskip\centerline{\sffamily\bfseries Вариант \arabic{NM}.}\smallskip $f(x) = \mathtt{#1}$\begin{enumerate}\item Построить АНФ методом треугольника.\item Найти нелинейность $N_f$.\item Найти ближайший линейный статистический аналог.\end{enumerate}\hrule height .5pt width \columnwidth\bigskip}}\begin{document}\pagestyle{empty}\twocolumn\Ex{1111101001100101}
+\Ex{0110100011011011}
+\Ex{1110110011100001}
+\Ex{0110101100100110}
+\Ex{0001010111011001}
+\Ex{0101000010010000}
+\Ex{1100101010001111}
+\Ex{1001111111101110}
+\Ex{0000101110100001}
+\Ex{0101111100101001}\small
+
+        \begin{minipage}{\linewidth}
+        \noindent\textbf{\fbox{1}} \texttt{1111101001100101} \\
+        $x_{0} x_{2} x_{3} + x_{0} x_{2} + x_{0} x_{3} + x_{1} x_{2} x_{3} + x_{1} x_{3} + x_{3} + 1$ \\
+        $N_f = 4$ \\
+        Ближайший аналог: $\langle 1001, x \rangle$
+
+        \begin{multicols}{2}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} & -4 \\
+        \texttt{0001} &  0 \\
+        \texttt{0010} &  0 \\
+        \texttt{0011} &  4 \\
+        \texttt{0100} & -4 \\
+        \texttt{0101} &  0 \\
+        \texttt{0110} &  0 \\
+        \texttt{0111} &  4 \\
+        \texttt{1000} & -4 \\
+        \texttt{1001} & -8 \\
+        \texttt{1010} &  0 \\
+        \texttt{1011} & -4 \\
+        \texttt{1100} & -4 \\
+        \texttt{1101} &  8 \\
+        \texttt{1110} &  0 \\
+        \texttt{1111} & -4 \\
+        \hline \end{tabular}
+
+        \columnbreak
+
+        \begin{tabular}{|r|l|} \hline
+        \multicolumn{2}{|c|}{АНФ треугольник} \\ \hline
+        0 & \texttt1111101001100101 \\
+1 & \texttt000011101010111 \\
+2 & \texttt00010011111100 \\
+3 & \texttt0011010000010 \\
+4 & \texttt010111000011 \\
+5 & \texttt11100100010 \\
+6 & \texttt0010110011 \\
+7 & \texttt011101010 \\
+8 & \texttt10011111 \\
+9 & \texttt1010000 \\
+10 & \texttt111000 \\
+11 & \texttt00100 \\
+12 & \texttt0110 \\
+13 & \texttt101 \\
+14 & \texttt11 \\
+15 & \texttt0 \\
+        \hline \end{tabular}
+        \end{multicols}
+        \hrule \bigskip \end{minipage}
+        
+
+        \begin{minipage}{\linewidth}
+        \noindent\textbf{\fbox{2}} \texttt{0110100011011011} \\
+        $x_{0} x_{1} x_{2} x_{3} + x_{0} x_{1} x_{2} + x_{0} x_{1} x_{3} + x_{0} x_{2} x_{3} + x_{0} x_{3} + x_{0} + x_{1} x_{2} x_{3} + x_{1} + x_{2} x_{3} + x_{2} + x_{3}$ \\
+        $N_f = 5$ \\
+        Ближайший аналог: $\langle 0101, x \rangle$
+
+        \begin{multicols}{2}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} & -2 \\
+        \texttt{0001} & -2 \\
+        \texttt{0010} & -2 \\
+        \texttt{0011} & -2 \\
+        \texttt{0100} & -2 \\
+        \texttt{0101} &  6 \\
+        \texttt{0110} & -2 \\
+        \texttt{0111} &  6 \\
+        \texttt{1000} &  6 \\
+        \texttt{1001} & -2 \\
+        \texttt{1010} & -2 \\
+        \texttt{1011} &  6 \\
+        \texttt{1100} & -2 \\
+        \texttt{1101} & -2 \\
+        \texttt{1110} &  6 \\
+        \texttt{1111} &  6 \\
+        \hline \end{tabular}
+
+        \columnbreak
+
+        \begin{tabular}{|r|l|} \hline
+        \multicolumn{2}{|c|}{АНФ треугольник} \\ \hline
+        0 & \texttt0110100011011011 \\
+1 & \texttt101110010110110 \\
+2 & \texttt11001011101101 \\
+3 & \texttt0101110011011 \\
+4 & \texttt111001010110 \\
+5 & \texttt00101111101 \\
+6 & \texttt0111000011 \\
+7 & \texttt100100010 \\
+8 & \texttt10110011 \\
+9 & \texttt1101010 \\
+10 & \texttt011111 \\
+11 & \texttt10000 \\
+12 & \texttt1000 \\
+13 & \texttt100 \\
+14 & \texttt10 \\
+15 & \texttt1 \\
+        \hline \end{tabular}
+        \end{multicols}
+        \hrule \bigskip \end{minipage}
+        
+
+        \begin{minipage}{\linewidth}
+        \noindent\textbf{\fbox{3}} \texttt{1110110011100001} \\
+        $x_{0} x_{1} x_{2} x_{3} + x_{0} x_{1} x_{2} + x_{0} x_{1} + x_{1} x_{2} x_{3} + x_{1} x_{2} + x_{2} x_{3} + 1$ \\
+        $N_f = 5$ \\
+        Ближайший аналог: $\langle 0010, x \rangle$
+
+        \begin{multicols}{2}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} & -2 \\
+        \texttt{0001} & -2 \\
+        \texttt{0010} & -6 \\
+        \texttt{0011} &  2 \\
+        \texttt{0100} & -6 \\
+        \texttt{0101} & -6 \\
+        \texttt{0110} & -2 \\
+        \texttt{0111} &  6 \\
+        \texttt{1000} & -2 \\
+        \texttt{1001} & -2 \\
+        \texttt{1010} & -6 \\
+        \texttt{1011} &  2 \\
+        \texttt{1100} &  2 \\
+        \texttt{1101} &  2 \\
+        \texttt{1110} &  6 \\
+        \texttt{1111} & -2 \\
+        \hline \end{tabular}
+
+        \columnbreak
+
+        \begin{tabular}{|r|l|} \hline
+        \multicolumn{2}{|c|}{АНФ треугольник} \\ \hline
+        0 & \texttt1110110011100001 \\
+1 & \texttt001101010010001 \\
+2 & \texttt01011111011001 \\
+3 & \texttt1110000110101 \\
+4 & \texttt001000101111 \\
+5 & \texttt01100111000 \\
+6 & \texttt1010100100 \\
+7 & \texttt111110110 \\
+8 & \texttt00001101 \\
+9 & \texttt0001011 \\
+10 & \texttt001110 \\
+11 & \texttt01001 \\
+12 & \texttt1101 \\
+13 & \texttt011 \\
+14 & \texttt10 \\
+15 & \texttt1 \\
+        \hline \end{tabular}
+        \end{multicols}
+        \hrule \bigskip \end{minipage}
+        
+
+        \begin{minipage}{\linewidth}
+        \noindent\textbf{\fbox{4}} \texttt{0110101100100110} \\
+        $x_{0} x_{1} x_{2} + x_{0} x_{1} x_{3} + x_{0} x_{2} x_{3} + x_{0} x_{3} + x_{0} + x_{1} x_{2} x_{3} + x_{1} x_{2} + x_{1} + x_{2} x_{3} + x_{2}$ \\
+        $N_f = 4$ \\
+        Ближайший аналог: $\langle 0011, x \rangle$
+
+        \begin{multicols}{2}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} &  0 \\
+        \texttt{0001} & -4 \\
+        \texttt{0010} &  4 \\
+        \texttt{0011} &  8 \\
+        \texttt{0100} &  4 \\
+        \texttt{0101} &  0 \\
+        \texttt{0110} &  0 \\
+        \texttt{0111} &  4 \\
+        \texttt{1000} & -4 \\
+        \texttt{1001} &  0 \\
+        \texttt{1010} &  0 \\
+        \texttt{1011} & -4 \\
+        \texttt{1100} &  0 \\
+        \texttt{1101} &  4 \\
+        \texttt{1110} & -4 \\
+        \texttt{1111} &  8 \\
+        \hline \end{tabular}
+
+        \columnbreak
+
+        \begin{tabular}{|r|l|} \hline
+        \multicolumn{2}{|c|}{АНФ треугольник} \\ \hline
+        0 & \texttt0110101100100110 \\
+1 & \texttt101111010110101 \\
+2 & \texttt11000111101111 \\
+3 & \texttt0100100011000 \\
+4 & \texttt110110010100 \\
+5 & \texttt01101011110 \\
+6 & \texttt1011110001 \\
+7 & \texttt110001001 \\
+8 & \texttt01001101 \\
+9 & \texttt1101011 \\
+10 & \texttt011110 \\
+11 & \texttt10001 \\
+12 & \texttt1001 \\
+13 & \texttt101 \\
+14 & \texttt11 \\
+15 & \texttt0 \\
+        \hline \end{tabular}
+        \end{multicols}
+        \hrule \bigskip \end{minipage}
+        
+
+        \begin{minipage}{\linewidth}
+        \noindent\textbf{\fbox{5}} \texttt{0001010111011001} \\
+        $x_{0} x_{1} x_{2} + x_{0} x_{1} + x_{0} x_{2} + x_{1} x_{3} + x_{3}$ \\
+        $N_f = 4$ \\
+        Ближайший аналог: $\langle 0001, x \rangle$
+
+        \begin{multicols}{2}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} &  0 \\
+        \texttt{0001} &  8 \\
+        \texttt{0010} &  0 \\
+        \texttt{0011} & -8 \\
+        \texttt{0100} &  0 \\
+        \texttt{0101} &  0 \\
+        \texttt{0110} &  0 \\
+        \texttt{0111} &  0 \\
+        \texttt{1000} &  4 \\
+        \texttt{1001} &  4 \\
+        \texttt{1010} &  4 \\
+        \texttt{1011} &  4 \\
+        \texttt{1100} &  4 \\
+        \texttt{1101} & -4 \\
+        \texttt{1110} &  4 \\
+        \texttt{1111} & -4 \\
+        \hline \end{tabular}
+
+        \columnbreak
+
+        \begin{tabular}{|r|l|} \hline
+        \multicolumn{2}{|c|}{АНФ треугольник} \\ \hline
+        0 & \texttt0001010111011001 \\
+1 & \texttt001111100110101 \\
+2 & \texttt01000010101111 \\
+3 & \texttt1100011111000 \\
+4 & \texttt010010000100 \\
+5 & \texttt11011000110 \\
+6 & \texttt0110100101 \\
+7 & \texttt101110111 \\
+8 & \texttt11001100 \\
+9 & \texttt0101010 \\
+10 & \texttt111111 \\
+11 & \texttt00000 \\
+12 & \texttt0000 \\
+13 & \texttt000 \\
+14 & \texttt00 \\
+15 & \texttt0 \\
+        \hline \end{tabular}
+        \end{multicols}
+        \hrule \bigskip \end{minipage}
+        
+
+        \begin{minipage}{\linewidth}
+        \noindent\textbf{\fbox{6}} \texttt{0101000010010000} \\
+        $x_{0} x_{2} + x_{0} + x_{1} x_{2} x_{3} + x_{1} x_{3} + x_{2} x_{3} + x_{3}$ \\
+        $N_f = 4$ \\
+        Ближайший аналог: $\langle 0000, x \rangle$
+
+        \begin{multicols}{2}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} &  8 \\
+        \texttt{0001} &  4 \\
+        \texttt{0010} &  0 \\
+        \texttt{0011} & -4 \\
+        \texttt{0100} & -8 \\
+        \texttt{0101} &  4 \\
+        \texttt{0110} &  0 \\
+        \texttt{0111} & -4 \\
+        \texttt{1000} &  0 \\
+        \texttt{1001} &  4 \\
+        \texttt{1010} &  0 \\
+        \texttt{1011} &  4 \\
+        \texttt{1100} &  0 \\
+        \texttt{1101} &  4 \\
+        \texttt{1110} &  0 \\
+        \texttt{1111} &  4 \\
+        \hline \end{tabular}
+
+        \columnbreak
+
+        \begin{tabular}{|r|l|} \hline
+        \multicolumn{2}{|c|}{АНФ треугольник} \\ \hline
+        0 & \texttt0101000010010000 \\
+1 & \texttt111100011011000 \\
+2 & \texttt00010010110100 \\
+3 & \texttt0011011101110 \\
+4 & \texttt010110011001 \\
+5 & \texttt11101010101 \\
+6 & \texttt0011111111 \\
+7 & \texttt010000000 \\
+8 & \texttt11000000 \\
+9 & \texttt0100000 \\
+10 & \texttt110000 \\
+11 & \texttt01000 \\
+12 & \texttt1100 \\
+13 & \texttt010 \\
+14 & \texttt11 \\
+15 & \texttt0 \\
+        \hline \end{tabular}
+        \end{multicols}
+        \hrule \bigskip \end{minipage}
+        
+
+        \begin{minipage}{\linewidth}
+        \noindent\textbf{\fbox{7}} \texttt{1100101010001111} \\
+        $x_{0} x_{1} x_{2} x_{3} + x_{0} x_{1} x_{3} + x_{0} x_{2} + x_{0} x_{3} + x_{1} x_{2} + x_{1} + 1$ \\
+        $N_f = 5$ \\
+        Ближайший аналог: $\langle 0001, x \rangle$
+
+        \begin{multicols}{2}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} & -2 \\
+        \texttt{0001} & -6 \\
+        \texttt{0010} & -6 \\
+        \texttt{0011} & -2 \\
+        \texttt{0100} &  6 \\
+        \texttt{0101} &  2 \\
+        \texttt{0110} & -6 \\
+        \texttt{0111} & -2 \\
+        \texttt{1000} &  2 \\
+        \texttt{1001} & -2 \\
+        \texttt{1010} & -2 \\
+        \texttt{1011} &  2 \\
+        \texttt{1100} & -6 \\
+        \texttt{1101} &  6 \\
+        \texttt{1110} & -2 \\
+        \texttt{1111} &  2 \\
+        \hline \end{tabular}
+
+        \columnbreak
+
+        \begin{tabular}{|r|l|} \hline
+        \multicolumn{2}{|c|}{АНФ треугольник} \\ \hline
+        0 & \texttt1100101010001111 \\
+1 & \texttt010111111001000 \\
+2 & \texttt11100000101100 \\
+3 & \texttt0010000111010 \\
+4 & \texttt011000100111 \\
+5 & \texttt10100110100 \\
+6 & \texttt1110101110 \\
+7 & \texttt001111001 \\
+8 & \texttt01000101 \\
+9 & \texttt1100111 \\
+10 & \texttt010100 \\
+11 & \texttt11110 \\
+12 & \texttt0001 \\
+13 & \texttt001 \\
+14 & \texttt01 \\
+15 & \texttt1 \\
+        \hline \end{tabular}
+        \end{multicols}
+        \hrule \bigskip \end{minipage}
+        
+
+        \begin{minipage}{\linewidth}
+        \noindent\textbf{\fbox{8}} \texttt{1001111111101110} \\
+        $x_{0} x_{1} x_{3} + x_{0} x_{2} x_{3} + x_{0} x_{2} + x_{0} x_{3} + x_{0} + x_{1} x_{2} x_{3} + x_{1} x_{2} + x_{1} x_{3} + x_{1} + 1$ \\
+        $N_f = 4$ \\
+        Ближайший аналог: $\langle 0000, x \rangle$
+
+        \begin{multicols}{2}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} & -8 \\
+        \texttt{0001} & -4 \\
+        \texttt{0010} & -4 \\
+        \texttt{0011} &  0 \\
+        \texttt{0100} &  4 \\
+        \texttt{0101} &  0 \\
+        \texttt{0110} &  0 \\
+        \texttt{0111} & -4 \\
+        \texttt{1000} &  0 \\
+        \texttt{1001} &  4 \\
+        \texttt{1010} &  4 \\
+        \texttt{1011} & -8 \\
+        \texttt{1100} &  4 \\
+        \texttt{1101} &  0 \\
+        \texttt{1110} &  0 \\
+        \texttt{1111} & -4 \\
+        \hline \end{tabular}
+
+        \columnbreak
+
+        \begin{tabular}{|r|l|} \hline
+        \multicolumn{2}{|c|}{АНФ треугольник} \\ \hline
+        0 & \texttt1001111111101110 \\
+1 & \texttt101000000011001 \\
+2 & \texttt11100000010101 \\
+3 & \texttt0010000011111 \\
+4 & \texttt011000010000 \\
+5 & \texttt10100011000 \\
+6 & \texttt1110010100 \\
+7 & \texttt001011110 \\
+8 & \texttt01110001 \\
+9 & \texttt1001001 \\
+10 & \texttt101101 \\
+11 & \texttt11011 \\
+12 & \texttt0110 \\
+13 & \texttt101 \\
+14 & \texttt11 \\
+15 & \texttt0 \\
+        \hline \end{tabular}
+        \end{multicols}
+        \hrule \bigskip \end{minipage}
+        
+
+        \begin{minipage}{\linewidth}
+        \noindent\textbf{\fbox{9}} \texttt{0000101110100001} \\
+        $x_{0} x_{1} x_{2} + x_{0} x_{2} + x_{0} x_{3} + x_{2} + x_{3}$ \\
+        $N_f = 4$ \\
+        Ближайший аналог: $\langle 1100, x \rangle$
+
+        \begin{multicols}{2}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} &  4 \\
+        \texttt{0001} & -4 \\
+        \texttt{0010} &  4 \\
+        \texttt{0011} & -4 \\
+        \texttt{0100} &  4 \\
+        \texttt{0101} & -4 \\
+        \texttt{0110} & -4 \\
+        \texttt{0111} &  4 \\
+        \texttt{1000} &  0 \\
+        \texttt{1001} &  0 \\
+        \texttt{1010} &  0 \\
+        \texttt{1011} &  0 \\
+        \texttt{1100} &  8 \\
+        \texttt{1101} &  8 \\
+        \texttt{1110} &  0 \\
+        \texttt{1111} &  0 \\
+        \hline \end{tabular}
+
+        \columnbreak
+
+        \begin{tabular}{|r|l|} \hline
+        \multicolumn{2}{|c|}{АНФ треугольник} \\ \hline
+        0 & \texttt0000101110100001 \\
+1 & \texttt000111001110001 \\
+2 & \texttt00100101001001 \\
+3 & \texttt0110111101101 \\
+4 & \texttt101100011011 \\
+5 & \texttt11010010110 \\
+6 & \texttt0111011101 \\
+7 & \texttt100110011 \\
+8 & \texttt10101010 \\
+9 & \texttt1111111 \\
+10 & \texttt000000 \\
+11 & \texttt00000 \\
+12 & \texttt0000 \\
+13 & \texttt000 \\
+14 & \texttt00 \\
+15 & \texttt0 \\
+        \hline \end{tabular}
+        \end{multicols}
+        \hrule \bigskip \end{minipage}
+        
+
+        \begin{minipage}{\linewidth}
+        \noindent\textbf{\fbox{10}} \texttt{0101111100101001} \\
+        $x_{0} x_{1} x_{2} x_{3} + x_{0} x_{1} x_{3} + x_{0} x_{2} + x_{0} x_{3} + x_{0} + x_{1} x_{3} + x_{2}$ \\
+        $N_f = 5$ \\
+        Ближайший аналог: $\langle 0100, x \rangle$
+
+        \begin{multicols}{2}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} & -2 \\
+        \texttt{0001} &  2 \\
+        \texttt{0010} &  2 \\
+        \texttt{0011} & -2 \\
+        \texttt{0100} &  6 \\
+        \texttt{0101} &  2 \\
+        \texttt{0110} &  2 \\
+        \texttt{0111} &  6 \\
+        \texttt{1000} & -6 \\
+        \texttt{1001} &  6 \\
+        \texttt{1010} & -2 \\
+        \texttt{1011} &  2 \\
+        \texttt{1100} &  2 \\
+        \texttt{1101} &  6 \\
+        \texttt{1110} & -2 \\
+        \texttt{1111} & -6 \\
+        \hline \end{tabular}
+
+        \columnbreak
+
+        \begin{tabular}{|r|l|} \hline
+        \multicolumn{2}{|c|}{АНФ треугольник} \\ \hline
+        0 & \texttt0101111100101001 \\
+1 & \texttt111000010111101 \\
+2 & \texttt00100011100011 \\
+3 & \texttt0110010010010 \\
+4 & \texttt101011011011 \\
+5 & \texttt11110110110 \\
+6 & \texttt0001101101 \\
+7 & \texttt001011011 \\
+8 & \texttt01110110 \\
+9 & \texttt1001101 \\
+10 & \texttt101011 \\
+11 & \texttt11110 \\
+12 & \texttt0001 \\
+13 & \texttt001 \\
+14 & \texttt01 \\
+15 & \texttt1 \\
+        \hline \end{tabular}
+        \end{multicols}
+        \hrule \bigskip \end{minipage}
+        \end{document}

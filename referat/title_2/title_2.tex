@@ -1,0 +1,143 @@
+\documentclass[14pt, a4paper]{extarticle}
+
+\usepackage{indentfirst}
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{tempora}
+\usepackage{ulem}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{url}
+\usepackage{titlesec}
+\usepackage{array}
+\usepackage{soul}
+
+\usepackage[
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=20mm,
+    right=20mm
+]{geometry}
+
+\setlength{\parindent}{1.25cm}
+\linespread{1.2}
+\sloppy
+\pagestyle{empty}
+
+\begin{document}
+
+\newgeometry{left=20mm, right=20mm, top=20mm, bottom=20mm}
+\thispagestyle{empty}
+\selectlanguage{russian}
+
+\begin{center}
+    \begin{spacing}{1}
+        \large\textbf{МОСКОВСКИЙ АВТОМОБИЛЬНО-ДОРОЖНЫЙ} \\
+        \large\textbf{ГОСУДАРСТВЕННЫЙ ТЕХНИЧЕСКИЙ УНИВЕРСИТЕТ} \\ [0.1cm]
+        \textbf{(МАДИ)}
+    \end{spacing}
+\end{center}
+
+\vspace{-1.5cm}
+
+\noindent
+\begin{minipage}[t]{0.70\textwidth}
+    \vspace{0pt}
+    \raggedright
+    Кафедра \\
+    \underline{ИМПСИИ} \\ [0.2cm]
+    Шифр и направление подготовки/специальность \\
+    \underline{01.03.04 Прикладная математика} \\ [0.2cm]
+    Направленность (профиль) \uline{Прикладная математика}
+
+\end{minipage}%
+\begin{minipage}[t]{0.30\textwidth}
+    \vspace{5cm}
+    \begin{flushright}
+        \begin{minipage}{\textwidth}
+            \raggedleft
+            УТВЕРЖДАЮ \\
+            зав. кафедрой \\ [0.6cm]
+            \underline{\hspace{1.8cm}} / Яшина М.В. / \\ [0.4cm]
+            «\underline{\hspace{0.7cm}}» \underline{\hspace{2.2cm}} 20\underline{\hspace{0.5cm}} г.
+        \end{minipage}
+    \end{flushright}
+\end{minipage}
+
+\vspace{1cm}
+\begin{center}
+    ЗАДАНИЕ \\
+    НА ВЫПУСКНУЮ КВАЛИФИКАЦИОННУЮ РАБОТУ \\ [0.3cm]
+    Чарыков Данила Владимирович \\
+    \small{(Фамилия, Имя, Отчество обучающегося)}
+\end{center}
+
+\vspace{0.4cm}
+
+\noindent Тема ВКР: \uline{Криптографические свойства булевых функций и их преобразований} \\
+утверждена приказом МАДИ от «\underline{\hspace{0.6cm}}» \underline{\hspace{3cm}} 20\underline{\hspace{0.6cm}} г. № \underline{\hspace{2cm}}
+
+
+\vspace{0.3cm}
+
+\noindent 1. Исходные данные по ВКР: \\
+\uline{Базовая организация -- Московский автомобильно-дорожный Государственный %
+Технический Университет (МАДИ), Прикладная математика. Характер работы -- %
+научно-исследовательская работа.}
+
+\vspace{0.3cm}
+
+\noindent 2. Обоснование темы ВКР и перечень подлежащих разработке вопросов: \\
+\noindent \uline{В связи с возрастающими требованиями к информационной безопасности %
+и необходимостью защиты данных от современных киберугроз одним из актуальных вопросов %
+является автоматизация анализа криптографических свойств булевых функций, определяющих %
+стойкость алгоритмов шифрования.}
+
+
+\newpage
+
+\begin{table}[H]
+\centering
+\small
+\begin{spacing}{1.1}
+\begin{tabular}{|>{\centering\arraybackslash}p{1cm}|
+                 >{\raggedright\arraybackslash}p{5cm}|
+                 >{\centering\arraybackslash}p{4cm}|
+                 >{\centering\arraybackslash}p{2cm}|
+                 >{\centering\arraybackslash}p{1.5cm}|
+                 >{\centering\arraybackslash}p{1.5cm}|}
+
+\hline
+\multirow{3}{*}{\centering № п/п} & \centering Наименование этапа работы & \centering Ф.И.О., должность, уч. степень, звание руководителя/консультанта & \centering Срок выполнения этапа, & \multicolumn{2}{c|}{подпись, дата} \\ \cline{5-6} 
+ & \centering (раздела) & \centering (этапа работы, раздела) & \centering раздела & Задание выдал & Задание принял \\ \hline
+1 & \centering Анализ и систематизация теоретических основ булевых функций & \centering Жуков Д.А. \\ к.ф.-м.н., доц. & 01.02.2025 & & \\ \hline
+2 & \centering Разработка алгоритмического обеспечения и программная реализация приложения & \centering Жуков Д.А. \\ к.ф.-м.н., доц. & 01.04.2025 & & \\ \hline
+3 & \centering Написание экономического обоснования & \centering Самохвалова Ж.П. \\ ст.пр. & 14.04.2025 & & \\ \hline
+4 & \centering Написание текста диплома & \centering Жуков Д.А. \\ к.ф.-м.н., доц. & 01.05.2025 & & \\ \hline
+5 & \centering Оформление текста ВКР & \centering Жуков Д.А. \\ к.ф.-м.н., доц. & 01.06.2025 & & \\ \hline
+\end{tabular}
+\end{spacing}
+\end{table}
+
+\vspace{1.5cm}
+
+\noindent
+\begin{tabular}{@{}p{3.5cm} >{\centering\arraybackslash}p{5.0cm} c >{\centering\arraybackslash}p{5.0cm}@{}}
+Руководитель ВКР & \underline{\hspace{0.8cm}Жуков Д.А.\hspace{0.8cm}} & / & \underline{\hspace{5.0cm}} \\
+& \scriptsize{(Ф.И.О.)} & & \scriptsize{(подпись, дата)} \\ [1cm]
+Задание принял & & & \\
+к исполнению & \underline{\hspace{0.8cm}Чарыков Д.В.\hspace{0.8cm}} & / & \underline{\hspace{5.0cm}} \\
+& \scriptsize{(Ф.И.О.)} & & \scriptsize{(подпись, дата)}
+\end{tabular}
+
+\restoregeometry
+
+\end{document}

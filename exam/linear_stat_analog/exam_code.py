@@ -11,7 +11,6 @@ from random import randint
 from sage.all import latex
 from sage.crypto.boolean_function import BooleanFunction
 
-# Константы
 N_VARS_FUNC = 4
 TT_SIZE = 2**N_VARS_FUNC
 

@@ -35,7 +35,6 @@ def generate_boolean_function() -> 'BooleanFunction':
         if bool_func.nonlinearity() >= 4:
             return bool_func
 
-
 def compute_mobius_transform(truth_table: list[int]) -> list[tuple[str, int]]:
     a = list(truth_table)
     n = N_VARS_FUNC
@@ -48,8 +47,11 @@ def compute_mobius_transform(truth_table: list[int]) -> list[tuple[str, int]]:
 
     mobius_table = []
     for i in range(len(a)):
-        binary_vector = f'{i:0{n}b}'[::-1]
-        mobius_table.append((binary_vector, a[i]))
+        binary_vector = f'{i:0{n}b}'
+
+        reversed_index = int(binary_vector[::-1], 2)
+
+        mobius_table.append((binary_vector, a[reversed_index]))
 
     return mobius_table
 
@@ -95,15 +97,28 @@ def get_anf_with_ones_indices(bool_func: BooleanFunction) -> str:
 
     return latex(substituted_poly)
 
+# Список активных задач. Чтобы убрать задачу из контрольной,
+# просто закомментируй или удали соответствующую строку.
+ACTIVE_TASKS = [
+    'anf',           # Построить АНФ преобразованием Мёбиуса
+    'nonlinearity',  # Найти нелинейность Nf
+    'analogs',       # Найти линейные статистические аналоги
+    # 'derivative',  # Вычислить дискретную производную \Delta_a f(x)
+]
 
-def build_latex_content(variants: list[BooleanVariant]) -> str:
-    task_block = (
-        r'\begin{enumerate}'
-        r'\item Построить АНФ преобразованием Мёбиуса.'
-        r'\item Найти нелинейность $N_f$.'
-        r'\item Найти все линейные статистические аналоги.'
-        r'\end{enumerate}'
-    )
+def build_latex_content(variants: list[BooleanVariant], active_tasks: list[str] = ACTIVE_TASKS) -> str:
+    # 1. Динамически собираем блок заданий
+    questions_latex = []
+    if 'anf' in active_tasks:
+        questions_latex.append(r'\item Построить АНФ преобразованием Мёбиуса.')
+    if 'nonlinearity' in active_tasks:
+        questions_latex.append(r'\item Найти нелинейность $N_f$.')
+    if 'analogs' in active_tasks:
+        questions_latex.append(r'\item Найти все линейные статистические аналоги.')
+    if 'derivative' in active_tasks:
+        questions_latex.append(r'\item Найти дискретную производную $\Delta_a f(x)$.')
+
+    task_block = r'\begin{enumerate}' + ''.join(questions_latex) + r'\end{enumerate}' if questions_latex else ''
 
     header = (
         r'\documentclass[11pt]{article}'
@@ -111,8 +126,7 @@ def build_latex_content(variants: list[BooleanVariant]) -> str:
         r'\usepackage[russian]{babel}'
         r'\usepackage{amsmath,amssymb,amsfonts}'
         r'\usepackage{geometry}'
-        r'\usepackage{multicol}'
-        r'\geometry{top=1.5cm,bottom=1.5cm,left=1.2cm,right=1.2cm}'
+        r'\geometry{top=1.2cm,bottom=1.2cm,left=1.2cm,right=1.2cm}'
         r'\newcounter{NM}'
         r'\newcommand{\Ex}[1]{'
         r'\par\addtocounter{NM}{1}\noindent\parbox[c]{\columnwidth}{'
@@ -123,50 +137,149 @@ def build_latex_content(variants: list[BooleanVariant]) -> str:
         r'\begin{document}\pagestyle{empty}\twocolumn'
     )
 
-    tasks = '\n'.join([f'\\Ex{{{v.tt_str}}}' for v in variants])
+    tasks = '\n'.join([f'\\Ex{{{v.tt_str[::-1]}}}' for v in variants])
 
+    answers_header = r'\clearpage\onecolumn\centerline{\Large\bfseries Ответы}\bigskip'
+    
     answers = []
     for i, v in enumerate(variants, 1):
-        walsh_rows = get_latex_walsh_table(v.bool_func)
-        non_linear = v.bool_func.nonlinearity()
-        analogs = find_linear_statistical_analogs(v.bool_func)
-        analogs_latex = ', '.join([f'${a}$' for a in analogs])
-        anf_latex = get_anf_with_ones_indices(v.bool_func)
+        tt_rev = v.truth_table[::-1]
+        
+        # 2. Динамически собираем строчки с короткими ответами
+        ans_header_info = []
+        
+        if 'anf' in active_tasks:
+            anf_latex = get_anf_with_ones_indices(v.bool_func)
+            ans_header_info.append(f'АНФ: ${anf_latex}$')
+            
+        if 'nonlinearity' in active_tasks:
+            non_linear = v.bool_func.nonlinearity()
+            ans_header_info.append(f'$N_f = {non_linear}$')
+            
+        if 'analogs' in active_tasks:
+            analogs = find_linear_statistical_analogs(v.bool_func)
+            analogs_latex = ', '.join([f'${a}$' for a in analogs]) if analogs else 'нет'
+            ans_header_info.append(f'Аналоги: {analogs_latex}')
 
-        mobius_rows_list = [
-            f'\\texttt{{{vector}}} & {coeff} \\\\'
-            for vector, coeff in v.mobius_table
-        ]
-        mobius_rows = '\n'.join(mobius_rows_list)
+        if 'derivative' in active_tasks:
+            ans_header_info.append(r'$\Delta_a f(x)$: (в разработке)')
 
-        ans_block = f"""
-        \\begin{{minipage}}{{\\linewidth}}
-        \\noindent\\textbf{{\\fbox{{{i}}}}} \\texttt{{{v.tt_str}}} \\\\
-        ${anf_latex}$ \\\\
-        $N_f = {non_linear}$ \\\\
-        {analogs_latex}
+        ans_header_latex = ' \\\\\n        '.join(ans_header_info)
+        
+        # 3. Динамически собираем большие таблицы с вычислениями
+        table_blocks = []
 
-        \\begin{{multicols}}{{2}}
-        \\footnotesize
-        \\begin{{tabular}}{{|c|c|}} \\hline
-        $u$ & $W_f(u)$ \\\\ \\hline
-        {walsh_rows}
-        \\hline \\end{{tabular}}
+        if 'analogs' in active_tasks:
+            walsh_rows = get_latex_walsh_table(v.bool_func)
+            walsh_steps = []
+            walsh_hadamard_values = v.bool_func.walsh_hadamard_transform()
+            for u_idx in range(16):
+                u_str = f'{u_idx:04b}'
+                matches = 0
+                mismatches = 0
+                for idx, val in enumerate(tt_rev):
+                    u_dot_x = ((u_idx >> 3) & 1) & ((idx >> 3) & 1) ^ \
+                              ((u_idx >> 2) & 1) & ((idx >> 2) & 1) ^ \
+                              ((u_idx >> 1) & 1) & ((idx >> 1) & 1) ^ \
+                              (u_idx & 1) & (idx & 1)
+                    if val == u_dot_x:
+                        matches += 1
+                    else:
+                        mismatches += 1
+                w_val = walsh_hadamard_values[u_idx]
+                walsh_steps.append(f'$W_f({u_str}) = {matches} - {mismatches} = {w_val}$')
+            
+            walsh_text = ' \\\\\n                '.join(walsh_steps)
+            walsh_block = (
+                "\\noindent\n"
+                "\\begin{minipage}[t]{0.46\\linewidth}\n"
+                "    \\begin{minipage}[t]{0.32\\linewidth}\n"
+                "        \\vspace{0pt}\n"
+                "        \\footnotesize\n"
+                "        \\begin{tabular}{|c|c|} \\hline\n"
+                "        $u$ & $W_f(u)$ \\\\ \\hline\n"
+                f"        {walsh_rows}\n"
+                "        \\hline \\end{tabular}\n"
+                "    \\end{minipage}%\n"
+                "    \\hfill\n"
+                "    \\begin{minipage}[t]{0.66\\linewidth}\n"
+                "        \\vspace{0pt}\n"
+                "        \\scriptsize\n"
+                f"        {walsh_text}\n"
+                "    \\end{minipage}\n"
+                "\\end{minipage}\n"
+            )
+            table_blocks.append(walsh_block)
 
-        \\columnbreak
+        if 'anf' in active_tasks:
+            mobius_rows_list = []
+            mobius_steps = []
+            
+            for g_idx in range(16):
+                g_vector = f'{g_idx:04b}'
+                subset_terms = []
+                calculated_coeff = 0
+                
+                for idx in range(16):
+                    if (idx & g_idx) == idx:
+                        val = int(tt_rev[idx])
+                        subset_terms.append(f'f({idx:04b})')
+                        calculated_coeff ^= val
+                
+                term_str = ' \\oplus '.join(subset_terms)
+                
+                mobius_rows_list.append(f'\\texttt{{{g_vector}}} & {calculated_coeff} \\\\')
+                mobius_steps.append(f'$c_{{{g_vector}}} = {term_str} = {calculated_coeff}$')
 
-        \\begin{{tabular}}{{|c|c|}} \\hline
-        \\multicolumn{{2}}{{|c|}}{{Преобр. Мёбиуса}} \\\\ \\hline
-        $g$ & $c_g$ \\\\ \\hline
-        {mobius_rows}
-        \\hline \\end{{tabular}}
-        \\end{{multicols}}
-        \\hrule \\bigskip \\end{{minipage}}
+            mobius_rows = '\n'.join(mobius_rows_list)
+            mobius_text = ' \\\\\n'.join(mobius_steps)
+            
+            mobius_block = (
+                "\\noindent\n"
+                "\\begin{minipage}[t]{0.25\\linewidth}\n"
+                "    \\vspace{0pt}\n"
+                "    \\footnotesize\n"
+                "    \\centering\n"
+                "    \\begin{tabular}[t]{|c|c|} \\hline\n"
+                "    \\multicolumn{2}{|c|}{Преобр. Мёбиуса} \\\\ \\hline\n"
+                "    $g$ & $c_g$ \\\\ \\hline\n"
+                f"    {mobius_rows}\n"
+                "    \\hline \\end{tabular}\n"
+                "\\end{minipage}%\n"
+                "\\hfill\n"
+                "\\begin{minipage}[t]{0.72\\linewidth}\n"
+                "    \\vspace{0pt}\n"
+                "    \\raggedright\n"
+                "    \\scriptsize\n"
+                f"    {mobius_text}\n"
+                "\\end{minipage}\n"
+            )
+            table_blocks.append(mobius_block)
+            
+        # Собираем таблицы рядом
+        tables_latex = '\n\n\\vspace{5mm}\n\n'.join(table_blocks)
+        
+        block_content = f"""
+        \\textbf{{\\fbox{{{i}}}}} \\texttt{{{v.tt_str[::-1]}}} \\\\[1mm]
+        {ans_header_latex} \\\\[2mm]
+        {tables_latex}
+        \\vfill
         """
-        answers.append(ans_block)
+        
+        # Оборачиваем в minipage шириной в текст, чтобы прижать всё к левому краю
+        ans_block = f"""
+        \\noindent
+        \\begin{{minipage}}[t]{{\\textwidth}}
+        {block_content.strip()}
+        \\end{{minipage}}
+        """
+        
+        if i % 2 == 0 and i < len(variants):
+            ans_block += r'\newpage'
 
-    return header + tasks + '\\small\n' + '\n'.join(answers) + r'\end{document}'
+        answers.append(ans_block)            
 
+    return header + tasks + '\n' + answers_header + '\n'.join(answers) + r'\end{document}'
 
 def compile_pdf(tex_path: Path) -> None:
     subprocess.run(

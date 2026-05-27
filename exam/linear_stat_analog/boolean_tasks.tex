@@ -1,660 +1,1332 @@
-\documentclass[11pt]{article}\usepackage[utf8]{inputenc}\usepackage[russian]{babel}\usepackage{amsmath,amssymb,amsfonts}\usepackage{geometry}\usepackage{multicol}\geometry{top=1.5cm,bottom=1.5cm,left=1.2cm,right=1.2cm}\newcounter{NM}\newcommand{\Ex}[1]{\par\addtocounter{NM}{1}\noindent\parbox[c]{\columnwidth}{\hrule height .5pt width \columnwidth\smallskip\centerline{\sffamily\bfseries Вариант \arabic{NM}.}\smallskip $f(x) = \mathtt{#1}$\begin{enumerate}\item Построить АНФ преобразованием Мёбиуса.\item Найти нелинейность $N_f$.\item Найти все линейные статистические аналоги.\end{enumerate}\hrule height .5pt width \columnwidth\bigskip}}\begin{document}\pagestyle{empty}\twocolumn\Ex{1111000100101000}
-\Ex{0011110111101110}
-\Ex{0010001011010011}
-\Ex{0010110111100001}
-\Ex{0001010011001001}
-\Ex{0001011001010001}
-\Ex{0010011110000100}
-\Ex{0111110101001010}
-\Ex{1001010010100011}
-\Ex{0111001010100010}
-\Ex{1010011110111010}
-\Ex{0101111000110100}\small
-
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{1}} \texttt{1111000100101000} \\
-        $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{2} x_{3} + x_{1} x_{2} x_{4} + x_{1} x_{3} x_{4} + x_{2} x_{4} + x_{3} + x_{4} + 1$ \\
-        $N_f = 5$ \\
-        $1 + \langle 0100, x \rangle$, $\langle 0111, x \rangle$, $1 + \langle 1000, x \rangle$, $\langle 1001, x \rangle$, $1 + \langle 1100, x \rangle$, $1 + \langle 1110, x \rangle$
-
-        \begin{multicols}{2}
+\documentclass[11pt]{article}\usepackage[utf8]{inputenc}\usepackage[russian]{babel}\usepackage{amsmath,amssymb,amsfonts}\usepackage{geometry}\geometry{top=1.2cm,bottom=1.2cm,left=1.2cm,right=1.2cm}\newcounter{NM}\newcommand{\Ex}[1]{\par\addtocounter{NM}{1}\noindent\parbox[c]{\columnwidth}{\hrule height .5pt width \columnwidth\smallskip\centerline{\sffamily\bfseries Вариант \arabic{NM}.}\smallskip $f(x) = \mathtt{#1}$\begin{enumerate}\item Построить АНФ преобразованием Мёбиуса.\item Найти нелинейность $N_f$.\item Найти все линейные статистические аналоги.\end{enumerate}\hrule height .5pt width \columnwidth\bigskip}}\begin{document}\pagestyle{empty}\twocolumn\Ex{0100000001001010}
+\Ex{0011101111110110}
+\Ex{0010011011111100}
+\Ex{1111010110110111}
+\Ex{0010000101011101}
+\Ex{1101011001001100}
+\Ex{1000100111010011}
+\Ex{0110010010100000}
+\Ex{0111101110001111}
+\Ex{0011001101000010}
+\Ex{0110110011000000}
+\Ex{0011010100000100}
+\clearpage\onecolumn\centerline{\Large\bfseries Ответы}\bigskip
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{1}} \texttt{0100000001001010} \\[1mm]
+        АНФ: $x_{1} x_{2} x_{3} + x_{1} x_{3} x_{4} + x_{1} x_{3} + x_{1} x_{4} + x_{1} + x_{2} x_{3}$ \\
+        $N_f = 4$ \\
+        Аналоги: $\langle 0000, x \rangle$, $\langle 0101, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
         \footnotesize
         \begin{tabular}{|c|c|} \hline
         $u$ & $W_f(u)$ \\ \hline
-                \texttt{0000} &  2 \\
-        \texttt{0001} & -2 \\
-        \texttt{0010} &  2 \\
-        \texttt{0011} & -2 \\
-        \texttt{0100} & -6 \\
-        \texttt{0101} & -2 \\
-        \texttt{0110} &  2 \\
-        \texttt{0111} &  6 \\
-        \texttt{1000} & -6 \\
-        \texttt{1001} &  6 \\
-        \texttt{1010} &  2 \\
-        \texttt{1011} & -2 \\
-        \texttt{1100} & -6 \\
-        \texttt{1101} & -2 \\
-        \texttt{1110} & -6 \\
-        \texttt{1111} & -2 \\
+                \texttt{0000} &  8 \\
+        \texttt{0001} &  0 \\
+        \texttt{0010} &  4 \\
+        \texttt{0011} &  4 \\
+        \texttt{0100} &  0 \\
+        \texttt{0101} &  8 \\
+        \texttt{0110} & -4 \\
+        \texttt{0111} & -4 \\
+        \texttt{1000} & -4 \\
+        \texttt{1001} &  4 \\
+        \texttt{1010} &  0 \\
+        \texttt{1011} &  0 \\
+        \texttt{1100} & -4 \\
+        \texttt{1101} &  4 \\
+        \texttt{1110} &  0 \\
+        \texttt{1111} &  0 \\
         \hline \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 12 - 4 = 8$ \\
+                $W_f(0001) = 8 - 8 = 0$ \\
+                $W_f(0010) = 6 - 10 = 4$ \\
+                $W_f(0011) = 10 - 6 = 4$ \\
+                $W_f(0100) = 8 - 8 = 0$ \\
+                $W_f(0101) = 12 - 4 = 8$ \\
+                $W_f(0110) = 6 - 10 = -4$ \\
+                $W_f(0111) = 10 - 6 = -4$ \\
+                $W_f(1000) = 10 - 6 = -4$ \\
+                $W_f(1001) = 10 - 6 = 4$ \\
+                $W_f(1010) = 8 - 8 = 0$ \\
+                $W_f(1011) = 8 - 8 = 0$ \\
+                $W_f(1100) = 6 - 10 = -4$ \\
+                $W_f(1101) = 6 - 10 = 4$ \\
+                $W_f(1110) = 8 - 8 = 0$ \\
+                $W_f(1111) = 8 - 8 = 0$
+    \end{minipage}
+\end{minipage}
 
-        \columnbreak
 
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 1 \\
-\texttt{1000} & 0 \\
-\texttt{0100} & 0 \\
-\texttt{1100} & 0 \\
-\texttt{0010} & 1 \\
-\texttt{1010} & 0 \\
-\texttt{0110} & 0 \\
-\texttt{1110} & 1 \\
+\vspace{5mm}
+
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 0 \\
 \texttt{0001} & 1 \\
-\texttt{1001} & 0 \\
+\texttt{0010} & 0 \\
+\texttt{0011} & 1 \\
+\texttt{0100} & 0 \\
 \texttt{0101} & 1 \\
+\texttt{0110} & 0 \\
+\texttt{0111} & 1 \\
+\texttt{1000} & 0 \\
+\texttt{1001} & 0 \\
+\texttt{1010} & 0 \\
+\texttt{1011} & 0 \\
+\texttt{1100} & 1 \\
 \texttt{1101} & 1 \\
-\texttt{0011} & 0 \\
-\texttt{1011} & 1 \\
-\texttt{0111} & 0 \\
-\texttt{1111} & 1 \\
-        \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
+\texttt{1110} & 0 \\
+\texttt{1111} & 0 \\
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 0$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 1$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 0$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 1$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 0$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 1$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 0$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 1$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 0$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 0$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 0$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 0$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 1$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 1$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 0$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 0$
+\end{minipage}
+
+        \vfill
+        \end{minipage}
         
 
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{2}} \texttt{0011110111101110} \\
-        $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{2} x_{3} + x_{1} x_{2} x_{4} + x_{2} x_{4} + x_{2} + x_{3} x_{4} + x_{3} + x_{4}$ \\
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{2}} \texttt{0011101111110110} \\[1mm]
+        АНФ: $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{2} x_{4} + x_{1} x_{3} x_{4} + x_{1} x_{3} + x_{1} x_{4} + x_{1} + x_{2} x_{3} x_{4} + x_{2} x_{3} + x_{2} + x_{3} x_{4} + x_{3} + x_{4}$ \\
         $N_f = 5$ \\
-        $1 + \langle 0000, x \rangle$, $\langle 0110, x \rangle$, $\langle 1001, x \rangle$, $\langle 1010, x \rangle$, $1 + \langle 1011, x \rangle$, $\langle 1110, x \rangle$
-
-        \begin{multicols}{2}
+        Аналоги: $1 + \langle 0000, x \rangle$, $1 + \langle 0010, x \rangle$, $\langle 1010, x \rangle$, $\langle 1011, x \rangle$, $\langle 1100, x \rangle$, $\langle 1111, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
         \footnotesize
         \begin{tabular}{|c|c|} \hline
         $u$ & $W_f(u)$ \\ \hline
                 \texttt{0000} & -6 \\
-        \texttt{0001} & -2 \\
-        \texttt{0010} & -2 \\
+        \texttt{0001} &  2 \\
+        \texttt{0010} & -6 \\
         \texttt{0011} &  2 \\
         \texttt{0100} &  2 \\
-        \texttt{0101} & -2 \\
-        \texttt{0110} &  6 \\
-        \texttt{0111} &  2 \\
-        \texttt{1000} &  2 \\
-        \texttt{1001} &  6 \\
-        \texttt{1010} &  6 \\
-        \texttt{1011} & -6 \\
-        \texttt{1100} &  2 \\
-        \texttt{1101} & -2 \\
-        \texttt{1110} &  6 \\
-        \texttt{1111} &  2 \\
-        \hline \end{tabular}
-
-        \columnbreak
-
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 0 \\
-\texttt{1000} & 0 \\
-\texttt{0100} & 1 \\
-\texttt{1100} & 0 \\
-\texttt{0010} & 1 \\
-\texttt{1010} & 0 \\
-\texttt{0110} & 0 \\
-\texttt{1110} & 1 \\
-\texttt{0001} & 1 \\
-\texttt{1001} & 0 \\
-\texttt{0101} & 1 \\
-\texttt{1101} & 1 \\
-\texttt{0011} & 1 \\
-\texttt{1011} & 0 \\
-\texttt{0111} & 0 \\
-\texttt{1111} & 1 \\
-        \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
-        
-
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{3}} \texttt{0010001011010011} \\
-        $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{2} + x_{2} + x_{3} x_{4} + x_{4}$ \\
-        $N_f = 5$ \\
-        $\langle 0010, x \rangle$, $1 + \langle 0110, x \rangle$, $\langle 1000, x \rangle$, $1 + \langle 1001, x \rangle$, $\langle 1011, x \rangle$, $\langle 1110, x \rangle$
-
-        \begin{multicols}{2}
-        \footnotesize
-        \begin{tabular}{|c|c|} \hline
-        $u$ & $W_f(u)$ \\ \hline
-                \texttt{0000} &  2 \\
-        \texttt{0001} & -2 \\
-        \texttt{0010} &  6 \\
-        \texttt{0011} &  2 \\
-        \texttt{0100} & -2 \\
         \texttt{0101} &  2 \\
-        \texttt{0110} & -6 \\
-        \texttt{0111} & -2 \\
-        \texttt{1000} &  6 \\
-        \texttt{1001} & -6 \\
-        \texttt{1010} &  2 \\
+        \texttt{0110} &  2 \\
+        \texttt{0111} &  2 \\
+        \texttt{1000} & -2 \\
+        \texttt{1001} & -2 \\
+        \texttt{1010} &  6 \\
         \texttt{1011} &  6 \\
-        \texttt{1100} &  2 \\
+        \texttt{1100} &  6 \\
         \texttt{1101} & -2 \\
-        \texttt{1110} &  6 \\
-        \texttt{1111} &  2 \\
+        \texttt{1110} & -2 \\
+        \texttt{1111} &  6 \\
         \hline \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 5 - 11 = -6$ \\
+                $W_f(0001) = 7 - 9 = 2$ \\
+                $W_f(0010) = 11 - 5 = -6$ \\
+                $W_f(0011) = 9 - 7 = 2$ \\
+                $W_f(0100) = 7 - 9 = 2$ \\
+                $W_f(0101) = 9 - 7 = 2$ \\
+                $W_f(0110) = 9 - 7 = 2$ \\
+                $W_f(0111) = 7 - 9 = 2$ \\
+                $W_f(1000) = 9 - 7 = -2$ \\
+                $W_f(1001) = 7 - 9 = -2$ \\
+                $W_f(1010) = 11 - 5 = 6$ \\
+                $W_f(1011) = 5 - 11 = 6$ \\
+                $W_f(1100) = 11 - 5 = 6$ \\
+                $W_f(1101) = 9 - 7 = -2$ \\
+                $W_f(1110) = 9 - 7 = -2$ \\
+                $W_f(1111) = 11 - 5 = 6$
+    \end{minipage}
+\end{minipage}
 
-        \columnbreak
 
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 0 \\
-\texttt{1000} & 0 \\
-\texttt{0100} & 1 \\
-\texttt{1100} & 1 \\
-\texttt{0010} & 0 \\
-\texttt{1010} & 0 \\
-\texttt{0110} & 0 \\
-\texttt{1110} & 0 \\
-\texttt{0001} & 1 \\
-\texttt{1001} & 0 \\
-\texttt{0101} & 0 \\
-\texttt{1101} & 0 \\
-\texttt{0011} & 1 \\
-\texttt{1011} & 0 \\
-\texttt{0111} & 0 \\
-\texttt{1111} & 1 \\
-        \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
-        
+\vspace{5mm}
 
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{4}} \texttt{0010110111100001} \\
-        $x_{1} x_{2} + x_{2} x_{4} + x_{2} + x_{3} + x_{4}$ \\
-        $N_f = 4$ \\
-        $1 + \langle 0101, x \rangle$, $\langle 0111, x \rangle$, $\langle 1100, x \rangle$, $\langle 1110, x \rangle$
-
-        \begin{multicols}{2}
-        \footnotesize
-        \begin{tabular}{|c|c|} \hline
-        $u$ & $W_f(u)$ \\ \hline
-                \texttt{0000} &  0 \\
-        \texttt{0001} &  0 \\
-        \texttt{0010} &  0 \\
-        \texttt{0011} &  0 \\
-        \texttt{0100} &  0 \\
-        \texttt{0101} & -8 \\
-        \texttt{0110} &  0 \\
-        \texttt{0111} &  8 \\
-        \texttt{1000} &  0 \\
-        \texttt{1001} &  0 \\
-        \texttt{1010} &  0 \\
-        \texttt{1011} &  0 \\
-        \texttt{1100} &  8 \\
-        \texttt{1101} &  0 \\
-        \texttt{1110} &  8 \\
-        \texttt{1111} &  0 \\
-        \hline \end{tabular}
-
-        \columnbreak
-
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 0 \\
-\texttt{1000} & 0 \\
-\texttt{0100} & 1 \\
-\texttt{1100} & 1 \\
-\texttt{0010} & 1 \\
-\texttt{1010} & 0 \\
-\texttt{0110} & 0 \\
-\texttt{1110} & 0 \\
-\texttt{0001} & 1 \\
-\texttt{1001} & 0 \\
-\texttt{0101} & 1 \\
-\texttt{1101} & 0 \\
-\texttt{0011} & 0 \\
-\texttt{1011} & 0 \\
-\texttt{0111} & 0 \\
-\texttt{1111} & 0 \\
-        \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
-        
-
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{5}} \texttt{0001010011001001} \\
-        $x_{1} x_{2} x_{4} + x_{1} x_{2} + x_{1} x_{3} + x_{2} x_{4} + x_{4}$ \\
-        $N_f = 4$ \\
-        $\langle 1110, x \rangle$, $1 + \langle 1111, x \rangle$
-
-        \begin{multicols}{2}
-        \footnotesize
-        \begin{tabular}{|c|c|} \hline
-        $u$ & $W_f(u)$ \\ \hline
-                \texttt{0000} &  4 \\
-        \texttt{0001} &  4 \\
-        \texttt{0010} & -4 \\
-        \texttt{0011} & -4 \\
-        \texttt{0100} &  0 \\
-        \texttt{0101} &  0 \\
-        \texttt{0110} &  0 \\
-        \texttt{0111} &  0 \\
-        \texttt{1000} &  4 \\
-        \texttt{1001} &  4 \\
-        \texttt{1010} &  4 \\
-        \texttt{1011} &  4 \\
-        \texttt{1100} &  0 \\
-        \texttt{1101} &  0 \\
-        \texttt{1110} &  8 \\
-        \texttt{1111} & -8 \\
-        \hline \end{tabular}
-
-        \columnbreak
-
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 0 \\
-\texttt{1000} & 0 \\
-\texttt{0100} & 0 \\
-\texttt{1100} & 1 \\
-\texttt{0010} & 0 \\
-\texttt{1010} & 1 \\
-\texttt{0110} & 0 \\
-\texttt{1110} & 0 \\
-\texttt{0001} & 1 \\
-\texttt{1001} & 0 \\
-\texttt{0101} & 1 \\
-\texttt{1101} & 1 \\
-\texttt{0011} & 0 \\
-\texttt{1011} & 0 \\
-\texttt{0111} & 0 \\
-\texttt{1111} & 0 \\
-        \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
-        
-
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{6}} \texttt{0001011001010001} \\
-        $x_{1} x_{2} x_{3} + x_{1} x_{2} x_{4} + x_{1} x_{2} + x_{1} x_{3} + x_{1} x_{4} + x_{2} x_{3} x_{4} + x_{2} x_{3}$ \\
-        $N_f = 4$ \\
-        $\langle 0001, x \rangle$, $1 + \langle 1111, x \rangle$
-
-        \begin{multicols}{2}
-        \footnotesize
-        \begin{tabular}{|c|c|} \hline
-        $u$ & $W_f(u)$ \\ \hline
-                \texttt{0000} &  4 \\
-        \texttt{0001} &  8 \\
-        \texttt{0010} &  4 \\
-        \texttt{0011} &  0 \\
-        \texttt{0100} &  0 \\
-        \texttt{0101} &  4 \\
-        \texttt{0110} &  0 \\
-        \texttt{0111} & -4 \\
-        \texttt{1000} &  0 \\
-        \texttt{1001} & -4 \\
-        \texttt{1010} &  0 \\
-        \texttt{1011} &  4 \\
-        \texttt{1100} &  4 \\
-        \texttt{1101} &  0 \\
-        \texttt{1110} &  4 \\
-        \texttt{1111} & -8 \\
-        \hline \end{tabular}
-
-        \columnbreak
-
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 0 \\
-\texttt{1000} & 0 \\
-\texttt{0100} & 0 \\
-\texttt{1100} & 1 \\
-\texttt{0010} & 0 \\
-\texttt{1010} & 1 \\
-\texttt{0110} & 1 \\
-\texttt{1110} & 1 \\
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 0 \\
 \texttt{0001} & 0 \\
-\texttt{1001} & 1 \\
-\texttt{0101} & 0 \\
-\texttt{1101} & 1 \\
+\texttt{0010} & 1 \\
 \texttt{0011} & 0 \\
-\texttt{1011} & 0 \\
-\texttt{0111} & 1 \\
-\texttt{1111} & 0 \\
-        \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
-        
-
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{7}} \texttt{0010011110000100} \\
-        $x_{1} x_{2} + x_{1} x_{3} x_{4} + x_{1} x_{3} + x_{1} x_{4} + x_{2} x_{3} x_{4} + x_{2} + x_{3} x_{4} + x_{4}$ \\
-        $N_f = 4$ \\
-        $1 + \langle 0101, x \rangle$, $\langle 1010, x \rangle$
-
-        \begin{multicols}{2}
-        \footnotesize
-        \begin{tabular}{|c|c|} \hline
-        $u$ & $W_f(u)$ \\ \hline
-                \texttt{0000} &  4 \\
-        \texttt{0001} &  0 \\
-        \texttt{0010} &  0 \\
-        \texttt{0011} &  4 \\
-        \texttt{0100} &  4 \\
-        \texttt{0101} & -8 \\
-        \texttt{0110} &  0 \\
-        \texttt{0111} & -4 \\
-        \texttt{1000} & -4 \\
-        \texttt{1001} &  0 \\
-        \texttt{1010} &  8 \\
-        \texttt{1011} &  4 \\
-        \texttt{1100} &  4 \\
-        \texttt{1101} &  0 \\
-        \texttt{1110} &  0 \\
-        \texttt{1111} &  4 \\
-        \hline \end{tabular}
-
-        \columnbreak
-
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 0 \\
-\texttt{1000} & 0 \\
 \texttt{0100} & 1 \\
-\texttt{1100} & 1 \\
-\texttt{0010} & 0 \\
-\texttt{1010} & 1 \\
-\texttt{0110} & 0 \\
-\texttt{1110} & 0 \\
-\texttt{0001} & 1 \\
-\texttt{1001} & 1 \\
-\texttt{0101} & 0 \\
-\texttt{1101} & 0 \\
-\texttt{0011} & 1 \\
-\texttt{1011} & 1 \\
+\texttt{0101} & 1 \\
+\texttt{0110} & 1 \\
 \texttt{0111} & 1 \\
-\texttt{1111} & 0 \\
-        \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
-        
+\texttt{1000} & 1 \\
+\texttt{1001} & 0 \\
+\texttt{1010} & 1 \\
+\texttt{1011} & 0 \\
+\texttt{1100} & 0 \\
+\texttt{1101} & 0 \\
+\texttt{1110} & 0 \\
+\texttt{1111} & 1 \\
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 0$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 0$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 1$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 0$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 1$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 1$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 1$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 1$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 1$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 0$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 1$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 0$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 0$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 0$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 0$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 1$
+\end{minipage}
 
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{8}} \texttt{0111110101001010} \\
-        $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{2} + x_{1} x_{3} x_{4} + x_{1} x_{3} + x_{1} + x_{2} x_{4} + x_{2} + x_{3}$ \\
+        \vfill
+        \end{minipage}
+        \newpage
+
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{3}} \texttt{0010011011111100} \\[1mm]
+        АНФ: $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{4} + x_{2} x_{3} + x_{2} + x_{3} x_{4} + x_{3}$ \\
         $N_f = 5$ \\
-        $\langle 0101, x \rangle$, $\langle 0111, x \rangle$, $1 + \langle 1000, x \rangle$, $\langle 1001, x \rangle$, $1 + \langle 1101, x \rangle$, $\langle 1110, x \rangle$
-
-        \begin{multicols}{2}
+        Аналоги: $\langle 0011, x \rangle$, $\langle 0110, x \rangle$, $1 + \langle 1000, x \rangle$, $\langle 1010, x \rangle$, $1 + \langle 1011, x \rangle$, $\langle 1100, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
         \footnotesize
         \begin{tabular}{|c|c|} \hline
         $u$ & $W_f(u)$ \\ \hline
                 \texttt{0000} & -2 \\
         \texttt{0001} &  2 \\
-        \texttt{0010} & -2 \\
-        \texttt{0011} &  2 \\
+        \texttt{0010} &  2 \\
+        \texttt{0011} &  6 \\
         \texttt{0100} &  2 \\
-        \texttt{0101} &  6 \\
-        \texttt{0110} &  2 \\
-        \texttt{0111} &  6 \\
+        \texttt{0101} & -2 \\
+        \texttt{0110} &  6 \\
+        \texttt{0111} &  2 \\
         \texttt{1000} & -6 \\
-        \texttt{1001} &  6 \\
-        \texttt{1010} &  2 \\
-        \texttt{1011} & -2 \\
-        \texttt{1100} & -2 \\
-        \texttt{1101} & -6 \\
-        \texttt{1110} &  6 \\
-        \texttt{1111} &  2 \\
+        \texttt{1001} & -2 \\
+        \texttt{1010} &  6 \\
+        \texttt{1011} & -6 \\
+        \texttt{1100} &  6 \\
+        \texttt{1101} &  2 \\
+        \texttt{1110} &  2 \\
+        \texttt{1111} & -2 \\
         \hline \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 7 - 9 = -2$ \\
+                $W_f(0001) = 7 - 9 = 2$ \\
+                $W_f(0010) = 7 - 9 = 2$ \\
+                $W_f(0011) = 11 - 5 = 6$ \\
+                $W_f(0100) = 7 - 9 = 2$ \\
+                $W_f(0101) = 7 - 9 = -2$ \\
+                $W_f(0110) = 11 - 5 = 6$ \\
+                $W_f(0111) = 7 - 9 = 2$ \\
+                $W_f(1000) = 11 - 5 = -6$ \\
+                $W_f(1001) = 7 - 9 = -2$ \\
+                $W_f(1010) = 11 - 5 = 6$ \\
+                $W_f(1011) = 11 - 5 = -6$ \\
+                $W_f(1100) = 11 - 5 = 6$ \\
+                $W_f(1101) = 7 - 9 = 2$ \\
+                $W_f(1110) = 7 - 9 = 2$ \\
+                $W_f(1111) = 7 - 9 = -2$
+    \end{minipage}
+\end{minipage}
 
-        \columnbreak
 
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 0 \\
-\texttt{1000} & 1 \\
-\texttt{0100} & 1 \\
-\texttt{1100} & 1 \\
-\texttt{0010} & 1 \\
-\texttt{1010} & 1 \\
-\texttt{0110} & 0 \\
-\texttt{1110} & 0 \\
+\vspace{5mm}
+
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 0 \\
 \texttt{0001} & 0 \\
-\texttt{1001} & 0 \\
+\texttt{0010} & 1 \\
+\texttt{0011} & 1 \\
+\texttt{0100} & 0 \\
 \texttt{0101} & 1 \\
-\texttt{1101} & 0 \\
-\texttt{0011} & 0 \\
+\texttt{0110} & 0 \\
+\texttt{0111} & 1 \\
+\texttt{1000} & 1 \\
+\texttt{1001} & 0 \\
+\texttt{1010} & 1 \\
 \texttt{1011} & 1 \\
-\texttt{0111} & 0 \\
+\texttt{1100} & 0 \\
+\texttt{1101} & 1 \\
+\texttt{1110} & 1 \\
 \texttt{1111} & 1 \\
-        \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 0$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 0$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 1$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 1$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 0$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 1$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 0$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 1$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 1$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 0$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 1$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 1$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 0$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 1$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 1$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 1$
+\end{minipage}
+
+        \vfill
+        \end{minipage}
         
 
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{9}} \texttt{1001010010100011} \\
-        $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{2} x_{3} + x_{1} x_{3} x_{4} + x_{1} + x_{2} x_{3} + x_{2} x_{4} + x_{2} + x_{3} + 1$ \\
-        $N_f = 5$ \\
-        $1 + \langle 0101, x \rangle$, $1 + \langle 0111, x \rangle$, $\langle 1001, x \rangle$, $1 + \langle 1010, x \rangle$, $\langle 1110, x \rangle$, $1 + \langle 1111, x \rangle$
-
-        \begin{multicols}{2}
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{4}} \texttt{1111010110110111} \\[1mm]
+        АНФ: $x_{1} x_{2} x_{4} + x_{1} x_{2} + x_{1} x_{3} x_{4} + x_{1} x_{4} + x_{2} x_{3} x_{4} + x_{2} x_{3} + 1$ \\
+        $N_f = 4$ \\
+        Аналоги: $1 + \langle 0000, x \rangle$, $1 + \langle 0101, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
         \footnotesize
         \begin{tabular}{|c|c|} \hline
         $u$ & $W_f(u)$ \\ \hline
-                \texttt{0000} &  2 \\
-        \texttt{0001} & -2 \\
-        \texttt{0010} &  2 \\
-        \texttt{0011} & -2 \\
-        \texttt{0100} & -2 \\
-        \texttt{0101} & -6 \\
-        \texttt{0110} & -2 \\
-        \texttt{0111} & -6 \\
-        \texttt{1000} &  2 \\
-        \texttt{1001} &  6 \\
-        \texttt{1010} & -6 \\
-        \texttt{1011} & -2 \\
-        \texttt{1100} & -2 \\
-        \texttt{1101} &  2 \\
-        \texttt{1110} &  6 \\
-        \texttt{1111} & -6 \\
+                \texttt{0000} & -8 \\
+        \texttt{0001} & -4 \\
+        \texttt{0010} & -4 \\
+        \texttt{0011} &  0 \\
+        \texttt{0100} &  4 \\
+        \texttt{0101} & -8 \\
+        \texttt{0110} &  0 \\
+        \texttt{0111} &  4 \\
+        \texttt{1000} &  0 \\
+        \texttt{1001} &  4 \\
+        \texttt{1010} & -4 \\
+        \texttt{1011} &  0 \\
+        \texttt{1100} & -4 \\
+        \texttt{1101} &  0 \\
+        \texttt{1110} &  0 \\
+        \texttt{1111} &  4 \\
         \hline \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 4 - 12 = -8$ \\
+                $W_f(0001) = 10 - 6 = -4$ \\
+                $W_f(0010) = 10 - 6 = -4$ \\
+                $W_f(0011) = 8 - 8 = 0$ \\
+                $W_f(0100) = 6 - 10 = 4$ \\
+                $W_f(0101) = 4 - 12 = -8$ \\
+                $W_f(0110) = 8 - 8 = 0$ \\
+                $W_f(0111) = 6 - 10 = 4$ \\
+                $W_f(1000) = 8 - 8 = 0$ \\
+                $W_f(1001) = 10 - 6 = 4$ \\
+                $W_f(1010) = 6 - 10 = -4$ \\
+                $W_f(1011) = 8 - 8 = 0$ \\
+                $W_f(1100) = 6 - 10 = -4$ \\
+                $W_f(1101) = 8 - 8 = 0$ \\
+                $W_f(1110) = 8 - 8 = 0$ \\
+                $W_f(1111) = 10 - 6 = 4$
+    \end{minipage}
+\end{minipage}
 
-        \columnbreak
 
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 1 \\
-\texttt{1000} & 1 \\
-\texttt{0100} & 1 \\
-\texttt{1100} & 0 \\
-\texttt{0010} & 1 \\
-\texttt{1010} & 0 \\
-\texttt{0110} & 1 \\
-\texttt{1110} & 1 \\
+\vspace{5mm}
+
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 1 \\
 \texttt{0001} & 0 \\
-\texttt{1001} & 0 \\
-\texttt{0101} & 1 \\
-\texttt{1101} & 0 \\
+\texttt{0010} & 0 \\
 \texttt{0011} & 0 \\
-\texttt{1011} & 1 \\
+\texttt{0100} & 1 \\
+\texttt{0101} & 1 \\
+\texttt{0110} & 0 \\
 \texttt{0111} & 0 \\
-\texttt{1111} & 1 \\
-        \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
-        
+\texttt{1000} & 0 \\
+\texttt{1001} & 1 \\
+\texttt{1010} & 0 \\
+\texttt{1011} & 1 \\
+\texttt{1100} & 0 \\
+\texttt{1101} & 1 \\
+\texttt{1110} & 1 \\
+\texttt{1111} & 0 \\
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 1$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 0$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 0$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 0$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 1$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 1$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 0$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 0$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 0$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 1$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 0$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 1$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 0$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 1$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 1$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 0$
+\end{minipage}
 
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{10}} \texttt{0111001010100010} \\
-        $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{2} x_{4} + x_{1} x_{2} + x_{1} x_{3} + x_{1} + x_{2} x_{3} x_{4} + x_{2} x_{4} + x_{2} + x_{3} x_{4} + x_{4}$ \\
+        \vfill
+        \end{minipage}
+        \newpage
+
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{5}} \texttt{0010000101011101} \\[1mm]
+        АНФ: $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{2} x_{3} + x_{1} x_{2} + x_{1} + x_{2} x_{3} x_{4} + x_{2} x_{4} + x_{3} x_{4} + 1$ \\
         $N_f = 5$ \\
-        $1 + \langle 0001, x \rangle$, $\langle 0010, x \rangle$, $\langle 0011, x \rangle$, $1 + \langle 0100, x \rangle$, $\langle 1001, x \rangle$, $\langle 1101, x \rangle$
-
-        \begin{multicols}{2}
+        Аналоги: $1 + \langle 0001, x \rangle$, $1 + \langle 0111, x \rangle$, $1 + \langle 1000, x \rangle$, $1 + \langle 1001, x \rangle$, $\langle 1010, x \rangle$, $\langle 1101, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
         \footnotesize
         \begin{tabular}{|c|c|} \hline
         $u$ & $W_f(u)$ \\ \hline
                 \texttt{0000} &  2 \\
         \texttt{0001} & -6 \\
-        \texttt{0010} &  6 \\
-        \texttt{0011} &  6 \\
-        \texttt{0100} & -6 \\
-        \texttt{0101} &  2 \\
-        \texttt{0110} & -2 \\
-        \texttt{0111} & -2 \\
-        \texttt{1000} & -2 \\
-        \texttt{1001} &  6 \\
-        \texttt{1010} &  2 \\
-        \texttt{1011} &  2 \\
+        \texttt{0010} & -2 \\
+        \texttt{0011} & -2 \\
+        \texttt{0100} & -2 \\
+        \texttt{0101} & -2 \\
+        \texttt{0110} &  2 \\
+        \texttt{0111} & -6 \\
+        \texttt{1000} & -6 \\
+        \texttt{1001} & -6 \\
+        \texttt{1010} &  6 \\
+        \texttt{1011} & -2 \\
         \texttt{1100} & -2 \\
         \texttt{1101} &  6 \\
         \texttt{1110} &  2 \\
         \texttt{1111} &  2 \\
         \hline \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 9 - 7 = 2$ \\
+                $W_f(0001) = 11 - 5 = -6$ \\
+                $W_f(0010) = 9 - 7 = -2$ \\
+                $W_f(0011) = 7 - 9 = -2$ \\
+                $W_f(0100) = 9 - 7 = -2$ \\
+                $W_f(0101) = 7 - 9 = -2$ \\
+                $W_f(0110) = 9 - 7 = 2$ \\
+                $W_f(0111) = 11 - 5 = -6$ \\
+                $W_f(1000) = 11 - 5 = -6$ \\
+                $W_f(1001) = 5 - 11 = -6$ \\
+                $W_f(1010) = 11 - 5 = 6$ \\
+                $W_f(1011) = 9 - 7 = -2$ \\
+                $W_f(1100) = 7 - 9 = -2$ \\
+                $W_f(1101) = 5 - 11 = 6$ \\
+                $W_f(1110) = 7 - 9 = 2$ \\
+                $W_f(1111) = 9 - 7 = 2$
+    \end{minipage}
+\end{minipage}
 
-        \columnbreak
 
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 0 \\
-\texttt{1000} & 1 \\
-\texttt{0100} & 1 \\
-\texttt{1100} & 1 \\
-\texttt{0010} & 0 \\
-\texttt{1010} & 1 \\
-\texttt{0110} & 0 \\
-\texttt{1110} & 0 \\
-\texttt{0001} & 1 \\
-\texttt{1001} & 0 \\
-\texttt{0101} & 1 \\
-\texttt{1101} & 1 \\
-\texttt{0011} & 1 \\
-\texttt{1011} & 0 \\
-\texttt{0111} & 1 \\
-\texttt{1111} & 1 \\
-        \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
-        
+\vspace{5mm}
 
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{11}} \texttt{1010011110111010} \\
-        $x_{1} x_{2} x_{3} + x_{1} x_{2} x_{4} + x_{1} + x_{2} x_{3} x_{4} + x_{2} x_{3} + x_{3} x_{4} + x_{3} + 1$ \\
-        $N_f = 4$ \\
-        $1 + \langle 0001, x \rangle$, $1 + \langle 1101, x \rangle$
-
-        \begin{multicols}{2}
-        \footnotesize
-        \begin{tabular}{|c|c|} \hline
-        $u$ & $W_f(u)$ \\ \hline
-                \texttt{0000} & -4 \\
-        \texttt{0001} & -8 \\
-        \texttt{0010} &  4 \\
-        \texttt{0011} &  0 \\
-        \texttt{0100} &  0 \\
-        \texttt{0101} & -4 \\
-        \texttt{0110} &  0 \\
-        \texttt{0111} & -4 \\
-        \texttt{1000} &  0 \\
-        \texttt{1001} &  4 \\
-        \texttt{1010} &  0 \\
-        \texttt{1011} &  4 \\
-        \texttt{1100} &  4 \\
-        \texttt{1101} & -8 \\
-        \texttt{1110} & -4 \\
-        \texttt{1111} &  0 \\
-        \hline \end{tabular}
-
-        \columnbreak
-
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 1 \\
-\texttt{1000} & 1 \\
-\texttt{0100} & 0 \\
-\texttt{1100} & 0 \\
-\texttt{0010} & 1 \\
-\texttt{1010} & 0 \\
-\texttt{0110} & 1 \\
-\texttt{1110} & 1 \\
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 0 \\
 \texttt{0001} & 0 \\
-\texttt{1001} & 0 \\
-\texttt{0101} & 0 \\
-\texttt{1101} & 1 \\
+\texttt{0010} & 1 \\
 \texttt{0011} & 1 \\
-\texttt{1011} & 0 \\
-\texttt{0111} & 1 \\
-\texttt{1111} & 0 \\
-        \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
+\texttt{0100} & 0 \\
+\texttt{0101} & 0 \\
+\texttt{0110} & 1 \\
+\texttt{0111} & 0 \\
+\texttt{1000} & 0 \\
+\texttt{1001} & 1 \\
+\texttt{1010} & 1 \\
+\texttt{1011} & 1 \\
+\texttt{1100} & 1 \\
+\texttt{1101} & 1 \\
+\texttt{1110} & 0 \\
+\texttt{1111} & 1 \\
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 0$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 0$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 1$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 1$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 0$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 0$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 1$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 0$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 0$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 1$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 1$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 1$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 1$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 1$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 0$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 1$
+\end{minipage}
+
+        \vfill
+        \end{minipage}
         
 
-        \begin{minipage}{\linewidth}
-        \noindent\textbf{\fbox{12}} \texttt{0101111000110100} \\
-        $x_{1} x_{2} x_{3} + x_{1} x_{3} + x_{1} x_{4} + x_{1} + x_{2} x_{3} x_{4} + x_{2} x_{4} + x_{3} x_{4} + x_{3}$ \\
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{6}} \texttt{1101011001001100} \\[1mm]
+        АНФ: $x_{1} x_{2} x_{3} + x_{1} x_{4} + x_{2} x_{3} x_{4} + x_{2} + x_{3} x_{4}$ \\
         $N_f = 4$ \\
-        $\langle 0110, x \rangle$, $\langle 1101, x \rangle$
-
-        \begin{multicols}{2}
+        Аналоги: $\langle 0010, x \rangle$, $1 + \langle 1111, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
         \footnotesize
         \begin{tabular}{|c|c|} \hline
         $u$ & $W_f(u)$ \\ \hline
                 \texttt{0000} &  0 \\
-        \texttt{0001} &  4 \\
-        \texttt{0010} &  0 \\
+        \texttt{0001} & -4 \\
+        \texttt{0010} &  8 \\
         \texttt{0011} &  4 \\
         \texttt{0100} &  0 \\
         \texttt{0101} &  4 \\
-        \texttt{0110} &  8 \\
-        \texttt{0111} & -4 \\
-        \texttt{1000} & -4 \\
+        \texttt{0110} &  0 \\
+        \texttt{0111} &  4 \\
+        \texttt{1000} &  4 \\
         \texttt{1001} &  0 \\
-        \texttt{1010} & -4 \\
+        \texttt{1010} &  4 \\
         \texttt{1011} &  0 \\
+        \texttt{1100} & -4 \\
+        \texttt{1101} &  0 \\
+        \texttt{1110} &  4 \\
+        \texttt{1111} & -8 \\
+        \hline \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 8 - 8 = 0$ \\
+                $W_f(0001) = 10 - 6 = -4$ \\
+                $W_f(0010) = 4 - 12 = 8$ \\
+                $W_f(0011) = 10 - 6 = 4$ \\
+                $W_f(0100) = 8 - 8 = 0$ \\
+                $W_f(0101) = 10 - 6 = 4$ \\
+                $W_f(0110) = 8 - 8 = 0$ \\
+                $W_f(0111) = 6 - 10 = 4$ \\
+                $W_f(1000) = 6 - 10 = 4$ \\
+                $W_f(1001) = 8 - 8 = 0$ \\
+                $W_f(1010) = 10 - 6 = 4$ \\
+                $W_f(1011) = 8 - 8 = 0$ \\
+                $W_f(1100) = 6 - 10 = -4$ \\
+                $W_f(1101) = 8 - 8 = 0$ \\
+                $W_f(1110) = 6 - 10 = 4$ \\
+                $W_f(1111) = 4 - 12 = -8$
+    \end{minipage}
+\end{minipage}
+
+
+\vspace{5mm}
+
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 1 \\
+\texttt{0001} & 0 \\
+\texttt{0010} & 1 \\
+\texttt{0011} & 1 \\
+\texttt{0100} & 1 \\
+\texttt{0101} & 1 \\
+\texttt{0110} & 0 \\
+\texttt{0111} & 1 \\
+\texttt{1000} & 1 \\
+\texttt{1001} & 1 \\
+\texttt{1010} & 1 \\
+\texttt{1011} & 0 \\
+\texttt{1100} & 0 \\
+\texttt{1101} & 0 \\
+\texttt{1110} & 1 \\
+\texttt{1111} & 0 \\
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 1$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 0$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 1$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 1$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 1$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 1$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 0$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 1$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 1$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 1$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 1$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 0$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 0$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 0$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 1$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 0$
+\end{minipage}
+
+        \vfill
+        \end{minipage}
+        \newpage
+
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{7}} \texttt{1000100111010011} \\[1mm]
+        АНФ: $x_{1} x_{2} x_{3} + x_{1} x_{3} + x_{1} x_{4} + x_{2} x_{3} + x_{2} + x_{3} x_{4} + 1$ \\
+        $N_f = 4$ \\
+        Аналоги: $1 + \langle 0011, x \rangle$, $1 + \langle 0110, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} &  0 \\
+        \texttt{0001} &  0 \\
+        \texttt{0010} &  0 \\
+        \texttt{0011} & -8 \\
+        \texttt{0100} &  0 \\
+        \texttt{0101} &  0 \\
+        \texttt{0110} & -8 \\
+        \texttt{0111} &  0 \\
+        \texttt{1000} & -4 \\
+        \texttt{1001} & -4 \\
+        \texttt{1010} & -4 \\
+        \texttt{1011} &  4 \\
         \texttt{1100} &  4 \\
-        \texttt{1101} &  8 \\
+        \texttt{1101} &  4 \\
+        \texttt{1110} & -4 \\
+        \texttt{1111} &  4 \\
+        \hline \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 8 - 8 = 0$ \\
+                $W_f(0001) = 8 - 8 = 0$ \\
+                $W_f(0010) = 8 - 8 = 0$ \\
+                $W_f(0011) = 4 - 12 = -8$ \\
+                $W_f(0100) = 8 - 8 = 0$ \\
+                $W_f(0101) = 8 - 8 = 0$ \\
+                $W_f(0110) = 4 - 12 = -8$ \\
+                $W_f(0111) = 8 - 8 = 0$ \\
+                $W_f(1000) = 10 - 6 = -4$ \\
+                $W_f(1001) = 6 - 10 = -4$ \\
+                $W_f(1010) = 6 - 10 = -4$ \\
+                $W_f(1011) = 6 - 10 = 4$ \\
+                $W_f(1100) = 10 - 6 = 4$ \\
+                $W_f(1101) = 6 - 10 = 4$ \\
+                $W_f(1110) = 10 - 6 = -4$ \\
+                $W_f(1111) = 10 - 6 = 4$
+    \end{minipage}
+\end{minipage}
+
+
+\vspace{5mm}
+
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 1 \\
+\texttt{0001} & 1 \\
+\texttt{0010} & 1 \\
+\texttt{0011} & 1 \\
+\texttt{0100} & 0 \\
+\texttt{0101} & 0 \\
+\texttt{0110} & 0 \\
+\texttt{0111} & 1 \\
+\texttt{1000} & 0 \\
+\texttt{1001} & 1 \\
+\texttt{1010} & 0 \\
+\texttt{1011} & 0 \\
+\texttt{1100} & 1 \\
+\texttt{1101} & 0 \\
+\texttt{1110} & 0 \\
+\texttt{1111} & 0 \\
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 1$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 1$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 1$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 1$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 0$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 0$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 0$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 1$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 0$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 1$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 0$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 0$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 1$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 0$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 0$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 0$
+\end{minipage}
+
+        \vfill
+        \end{minipage}
+        
+
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{8}} \texttt{0110010010100000} \\[1mm]
+        АНФ: $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{2} x_{4} + x_{1} x_{3} + x_{2} x_{4}$ \\
+        $N_f = 5$ \\
+        Аналоги: $\langle 0000, x \rangle$, $\langle 0011, x \rangle$, $\langle 0100, x \rangle$, $1 + \langle 0101, x \rangle$, $\langle 1001, x \rangle$, $1 + \langle 1011, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} &  6 \\
+        \texttt{0001} &  2 \\
+        \texttt{0010} &  2 \\
+        \texttt{0011} &  6 \\
+        \texttt{0100} &  6 \\
+        \texttt{0101} & -6 \\
+        \texttt{0110} &  2 \\
+        \texttt{0111} & -2 \\
+        \texttt{1000} &  2 \\
+        \texttt{1001} &  6 \\
+        \texttt{1010} & -2 \\
+        \texttt{1011} & -6 \\
+        \texttt{1100} &  2 \\
+        \texttt{1101} & -2 \\
+        \texttt{1110} & -2 \\
+        \texttt{1111} &  2 \\
+        \hline \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 11 - 5 = 6$ \\
+                $W_f(0001) = 7 - 9 = 2$ \\
+                $W_f(0010) = 7 - 9 = 2$ \\
+                $W_f(0011) = 11 - 5 = 6$ \\
+                $W_f(0100) = 5 - 11 = 6$ \\
+                $W_f(0101) = 5 - 11 = -6$ \\
+                $W_f(0110) = 9 - 7 = 2$ \\
+                $W_f(0111) = 9 - 7 = -2$ \\
+                $W_f(1000) = 7 - 9 = 2$ \\
+                $W_f(1001) = 11 - 5 = 6$ \\
+                $W_f(1010) = 7 - 9 = -2$ \\
+                $W_f(1011) = 11 - 5 = -6$ \\
+                $W_f(1100) = 9 - 7 = 2$ \\
+                $W_f(1101) = 9 - 7 = -2$ \\
+                $W_f(1110) = 9 - 7 = -2$ \\
+                $W_f(1111) = 9 - 7 = 2$
+    \end{minipage}
+\end{minipage}
+
+
+\vspace{5mm}
+
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 0 \\
+\texttt{0001} & 1 \\
+\texttt{0010} & 1 \\
+\texttt{0011} & 0 \\
+\texttt{0100} & 0 \\
+\texttt{0101} & 0 \\
+\texttt{0110} & 1 \\
+\texttt{0111} & 1 \\
+\texttt{1000} & 1 \\
+\texttt{1001} & 0 \\
+\texttt{1010} & 1 \\
+\texttt{1011} & 0 \\
+\texttt{1100} & 1 \\
+\texttt{1101} & 1 \\
+\texttt{1110} & 1 \\
+\texttt{1111} & 1 \\
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 0$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 1$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 1$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 0$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 0$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 0$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 1$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 1$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 1$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 0$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 1$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 0$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 1$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 1$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 1$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 1$
+\end{minipage}
+
+        \vfill
+        \end{minipage}
+        \newpage
+
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{9}} \texttt{0111101110001111} \\[1mm]
+        АНФ: $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{2} x_{3} + x_{1} x_{2} x_{4} + x_{2} x_{3} x_{4} + x_{2} x_{4} + x_{3} x_{4} + x_{3} + 1$ \\
+        $N_f = 5$ \\
+        Аналоги: $1 + \langle 0000, x \rangle$, $1 + \langle 0100, x \rangle$, $\langle 1010, x \rangle$, $1 + \langle 1100, x \rangle$, $1 + \langle 1101, x \rangle$, $\langle 1111, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} & -6 \\
+        \texttt{0001} &  2 \\
+        \texttt{0010} & -2 \\
+        \texttt{0011} & -2 \\
+        \texttt{0100} & -6 \\
+        \texttt{0101} &  2 \\
+        \texttt{0110} & -2 \\
+        \texttt{0111} & -2 \\
+        \texttt{1000} &  2 \\
+        \texttt{1001} &  2 \\
+        \texttt{1010} &  6 \\
+        \texttt{1011} & -2 \\
+        \texttt{1100} & -6 \\
+        \texttt{1101} & -6 \\
+        \texttt{1110} & -2 \\
+        \texttt{1111} &  6 \\
+        \hline \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 5 - 11 = -6$ \\
+                $W_f(0001) = 7 - 9 = 2$ \\
+                $W_f(0010) = 9 - 7 = -2$ \\
+                $W_f(0011) = 7 - 9 = -2$ \\
+                $W_f(0100) = 11 - 5 = -6$ \\
+                $W_f(0101) = 9 - 7 = 2$ \\
+                $W_f(0110) = 7 - 9 = -2$ \\
+                $W_f(0111) = 9 - 7 = -2$ \\
+                $W_f(1000) = 7 - 9 = 2$ \\
+                $W_f(1001) = 9 - 7 = 2$ \\
+                $W_f(1010) = 11 - 5 = 6$ \\
+                $W_f(1011) = 9 - 7 = -2$ \\
+                $W_f(1100) = 5 - 11 = -6$ \\
+                $W_f(1101) = 11 - 5 = -6$ \\
+                $W_f(1110) = 9 - 7 = -2$ \\
+                $W_f(1111) = 11 - 5 = 6$
+    \end{minipage}
+\end{minipage}
+
+
+\vspace{5mm}
+
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 0 \\
+\texttt{0001} & 1 \\
+\texttt{0010} & 1 \\
+\texttt{0011} & 1 \\
+\texttt{0100} & 1 \\
+\texttt{0101} & 0 \\
+\texttt{0110} & 1 \\
+\texttt{0111} & 0 \\
+\texttt{1000} & 1 \\
+\texttt{1001} & 0 \\
+\texttt{1010} & 0 \\
+\texttt{1011} & 0 \\
+\texttt{1100} & 1 \\
+\texttt{1101} & 1 \\
+\texttt{1110} & 0 \\
+\texttt{1111} & 1 \\
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 0$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 1$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 1$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 1$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 1$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 0$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 1$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 0$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 1$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 0$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 0$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 0$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 1$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 1$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 0$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 1$
+\end{minipage}
+
+        \vfill
+        \end{minipage}
+        
+
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{10}} \texttt{0011001101000010} \\[1mm]
+        АНФ: $x_{1} x_{2} x_{4} + x_{1} x_{2} + x_{1} x_{3} x_{4} + x_{1} x_{3} + x_{1} x_{4} + x_{1} + x_{2} x_{3} x_{4} + x_{2} x_{3} + x_{2} x_{4} + x_{4}$ \\
+        $N_f = 4$ \\
+        Аналоги: $1 + \langle 0010, x \rangle$, $\langle 1010, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} &  4 \\
+        \texttt{0001} &  0 \\
+        \texttt{0010} & -8 \\
+        \texttt{0011} &  4 \\
+        \texttt{0100} &  0 \\
+        \texttt{0101} &  4 \\
+        \texttt{0110} & -4 \\
+        \texttt{0111} &  0 \\
+        \texttt{1000} &  4 \\
+        \texttt{1001} &  0 \\
+        \texttt{1010} &  8 \\
+        \texttt{1011} &  4 \\
+        \texttt{1100} &  0 \\
+        \texttt{1101} &  4 \\
         \texttt{1110} & -4 \\
         \texttt{1111} &  0 \\
         \hline \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 10 - 6 = 4$ \\
+                $W_f(0001) = 8 - 8 = 0$ \\
+                $W_f(0010) = 12 - 4 = -8$ \\
+                $W_f(0011) = 10 - 6 = 4$ \\
+                $W_f(0100) = 8 - 8 = 0$ \\
+                $W_f(0101) = 10 - 6 = 4$ \\
+                $W_f(0110) = 6 - 10 = -4$ \\
+                $W_f(0111) = 8 - 8 = 0$ \\
+                $W_f(1000) = 6 - 10 = 4$ \\
+                $W_f(1001) = 8 - 8 = 0$ \\
+                $W_f(1010) = 12 - 4 = 8$ \\
+                $W_f(1011) = 6 - 10 = 4$ \\
+                $W_f(1100) = 8 - 8 = 0$ \\
+                $W_f(1101) = 6 - 10 = 4$ \\
+                $W_f(1110) = 10 - 6 = -4$ \\
+                $W_f(1111) = 8 - 8 = 0$
+    \end{minipage}
+\end{minipage}
 
-        \columnbreak
 
-        \begin{tabular}{|c|c|} \hline
-        \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
-        $g$ & $c_g$ \\ \hline
-        \texttt{0000} & 0 \\
-\texttt{1000} & 1 \\
-\texttt{0100} & 0 \\
-\texttt{1100} & 0 \\
-\texttt{0010} & 1 \\
-\texttt{1010} & 1 \\
-\texttt{0110} & 0 \\
-\texttt{1110} & 1 \\
+\vspace{5mm}
+
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 0 \\
 \texttt{0001} & 0 \\
+\texttt{0010} & 1 \\
+\texttt{0011} & 0 \\
+\texttt{0100} & 0 \\
+\texttt{0101} & 0 \\
+\texttt{0110} & 0 \\
+\texttt{0111} & 0 \\
+\texttt{1000} & 0 \\
 \texttt{1001} & 1 \\
-\texttt{0101} & 1 \\
-\texttt{1101} & 0 \\
-\texttt{0011} & 1 \\
-\texttt{1011} & 0 \\
-\texttt{0111} & 1 \\
+\texttt{1010} & 1 \\
+\texttt{1011} & 1 \\
+\texttt{1100} & 0 \\
+\texttt{1101} & 1 \\
+\texttt{1110} & 1 \\
 \texttt{1111} & 0 \\
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 0$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 0$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 1$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 0$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 0$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 0$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 0$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 0$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 0$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 1$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 1$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 1$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 0$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 1$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 1$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 0$
+\end{minipage}
+
+        \vfill
+        \end{minipage}
+        \newpage
+
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{11}} \texttt{0110110011000000} \\[1mm]
+        АНФ: $x_{1} x_{3} x_{4} + x_{2} x_{3} x_{4} + x_{2} x_{3} + x_{2} x_{4}$ \\
+        $N_f = 4$ \\
+        Аналоги: $\langle 0010, x \rangle$, $1 + \langle 1110, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} &  4 \\
+        \texttt{0001} &  0 \\
+        \texttt{0010} &  8 \\
+        \texttt{0011} &  4 \\
+        \texttt{0100} &  4 \\
+        \texttt{0101} &  0 \\
+        \texttt{0110} &  0 \\
+        \texttt{0111} & -4 \\
+        \texttt{1000} &  4 \\
+        \texttt{1001} &  0 \\
+        \texttt{1010} &  0 \\
+        \texttt{1011} & -4 \\
+        \texttt{1100} &  4 \\
+        \texttt{1101} &  0 \\
+        \texttt{1110} & -8 \\
+        \texttt{1111} &  4 \\
         \hline \end{tabular}
-        \end{multicols}
-        \hrule \bigskip \end{minipage}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 10 - 6 = 4$ \\
+                $W_f(0001) = 8 - 8 = 0$ \\
+                $W_f(0010) = 4 - 12 = 8$ \\
+                $W_f(0011) = 10 - 6 = 4$ \\
+                $W_f(0100) = 6 - 10 = 4$ \\
+                $W_f(0101) = 8 - 8 = 0$ \\
+                $W_f(0110) = 8 - 8 = 0$ \\
+                $W_f(0111) = 10 - 6 = -4$ \\
+                $W_f(1000) = 6 - 10 = 4$ \\
+                $W_f(1001) = 8 - 8 = 0$ \\
+                $W_f(1010) = 8 - 8 = 0$ \\
+                $W_f(1011) = 10 - 6 = -4$ \\
+                $W_f(1100) = 10 - 6 = 4$ \\
+                $W_f(1101) = 8 - 8 = 0$ \\
+                $W_f(1110) = 12 - 4 = -8$ \\
+                $W_f(1111) = 10 - 6 = 4$
+    \end{minipage}
+\end{minipage}
+
+
+\vspace{5mm}
+
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 0 \\
+\texttt{0001} & 1 \\
+\texttt{0010} & 1 \\
+\texttt{0011} & 0 \\
+\texttt{0100} & 1 \\
+\texttt{0101} & 1 \\
+\texttt{0110} & 0 \\
+\texttt{0111} & 0 \\
+\texttt{1000} & 1 \\
+\texttt{1001} & 1 \\
+\texttt{1010} & 0 \\
+\texttt{1011} & 0 \\
+\texttt{1100} & 0 \\
+\texttt{1101} & 1 \\
+\texttt{1110} & 1 \\
+\texttt{1111} & 0 \\
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 0$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 1$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 1$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 0$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 1$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 1$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 0$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 0$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 1$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 1$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 0$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 0$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 0$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 1$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 1$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 0$
+\end{minipage}
+
+        \vfill
+        \end{minipage}
+        
+
+        \noindent
+        \begin{minipage}[t]{\textwidth}
+        \textbf{\fbox{12}} \texttt{0011010100000100} \\[1mm]
+        АНФ: $x_{1} x_{2} x_{3} x_{4} + x_{1} x_{2} x_{3} + x_{1} x_{2} x_{4} + x_{1} x_{2} + x_{1} x_{3} x_{4} + x_{1} x_{4} + x_{2} x_{3} + x_{2} x_{4} + x_{2} + x_{4}$ \\
+        $N_f = 5$ \\
+        Аналоги: $\langle 0000, x \rangle$, $1 + \langle 0001, x \rangle$, $1 + \langle 0101, x \rangle$, $\langle 0110, x \rangle$, $\langle 1000, x \rangle$, $\langle 1010, x \rangle$ \\[2mm]
+        \noindent
+\begin{minipage}[t]{0.46\linewidth}
+    \begin{minipage}[t]{0.32\linewidth}
+        \vspace{0pt}
+        \footnotesize
+        \begin{tabular}{|c|c|} \hline
+        $u$ & $W_f(u)$ \\ \hline
+                \texttt{0000} &  6 \\
+        \texttt{0001} & -6 \\
+        \texttt{0010} & -2 \\
+        \texttt{0011} &  2 \\
+        \texttt{0100} & -2 \\
+        \texttt{0101} & -6 \\
+        \texttt{0110} &  6 \\
+        \texttt{0111} &  2 \\
+        \texttt{1000} &  6 \\
+        \texttt{1001} &  2 \\
+        \texttt{1010} &  6 \\
+        \texttt{1011} &  2 \\
+        \texttt{1100} & -2 \\
+        \texttt{1101} &  2 \\
+        \texttt{1110} & -2 \\
+        \texttt{1111} &  2 \\
+        \hline \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.66\linewidth}
+        \vspace{0pt}
+        \scriptsize
+        $W_f(0000) = 11 - 5 = 6$ \\
+                $W_f(0001) = 11 - 5 = -6$ \\
+                $W_f(0010) = 9 - 7 = -2$ \\
+                $W_f(0011) = 9 - 7 = 2$ \\
+                $W_f(0100) = 9 - 7 = -2$ \\
+                $W_f(0101) = 5 - 11 = -6$ \\
+                $W_f(0110) = 11 - 5 = 6$ \\
+                $W_f(0111) = 7 - 9 = 2$ \\
+                $W_f(1000) = 5 - 11 = 6$ \\
+                $W_f(1001) = 9 - 7 = 2$ \\
+                $W_f(1010) = 11 - 5 = 6$ \\
+                $W_f(1011) = 7 - 9 = 2$ \\
+                $W_f(1100) = 7 - 9 = -2$ \\
+                $W_f(1101) = 7 - 9 = 2$ \\
+                $W_f(1110) = 9 - 7 = -2$ \\
+                $W_f(1111) = 9 - 7 = 2$
+    \end{minipage}
+\end{minipage}
+
+
+\vspace{5mm}
+
+\noindent
+\begin{minipage}[t]{0.25\linewidth}
+    \vspace{0pt}
+    \footnotesize
+    \centering
+    \begin{tabular}[t]{|c|c|} \hline
+    \multicolumn{2}{|c|}{Преобр. Мёбиуса} \\ \hline
+    $g$ & $c_g$ \\ \hline
+    \texttt{0000} & 0 \\
+\texttt{0001} & 0 \\
+\texttt{0010} & 1 \\
+\texttt{0011} & 0 \\
+\texttt{0100} & 0 \\
+\texttt{0101} & 1 \\
+\texttt{0110} & 1 \\
+\texttt{0111} & 0 \\
+\texttt{1000} & 0 \\
+\texttt{1001} & 0 \\
+\texttt{1010} & 1 \\
+\texttt{1011} & 0 \\
+\texttt{1100} & 0 \\
+\texttt{1101} & 0 \\
+\texttt{1110} & 1 \\
+\texttt{1111} & 1 \\
+    \hline \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.72\linewidth}
+    \vspace{0pt}
+    \raggedright
+    \scriptsize
+    $c_{0000} = f(0000) = 0$ \\
+$c_{0001} = f(0000) \oplus f(0001) = 0$ \\
+$c_{0010} = f(0000) \oplus f(0010) = 1$ \\
+$c_{0011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) = 0$ \\
+$c_{0100} = f(0000) \oplus f(0100) = 0$ \\
+$c_{0101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) = 1$ \\
+$c_{0110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) = 1$ \\
+$c_{0111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) = 0$ \\
+$c_{1000} = f(0000) \oplus f(1000) = 0$ \\
+$c_{1001} = f(0000) \oplus f(0001) \oplus f(1000) \oplus f(1001) = 0$ \\
+$c_{1010} = f(0000) \oplus f(0010) \oplus f(1000) \oplus f(1010) = 1$ \\
+$c_{1011} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) = 0$ \\
+$c_{1100} = f(0000) \oplus f(0100) \oplus f(1000) \oplus f(1100) = 0$ \\
+$c_{1101} = f(0000) \oplus f(0001) \oplus f(0100) \oplus f(0101) \oplus f(1000) \oplus f(1001) \oplus f(1100) \oplus f(1101) = 0$ \\
+$c_{1110} = f(0000) \oplus f(0010) \oplus f(0100) \oplus f(0110) \oplus f(1000) \oplus f(1010) \oplus f(1100) \oplus f(1110) = 1$ \\
+$c_{1111} = f(0000) \oplus f(0001) \oplus f(0010) \oplus f(0011) \oplus f(0100) \oplus f(0101) \oplus f(0110) \oplus f(0111) \oplus f(1000) \oplus f(1001) \oplus f(1010) \oplus f(1011) \oplus f(1100) \oplus f(1101) \oplus f(1110) \oplus f(1111) = 1$
+\end{minipage}
+
+        \vfill
+        \end{minipage}
         \end{document}
